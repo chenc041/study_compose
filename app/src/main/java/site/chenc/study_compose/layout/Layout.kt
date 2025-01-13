@@ -17,39 +17,46 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
-import site.chenc.study_compose.R // 确保正确导入 R 类
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import site.chenc.study_compose.R
+import site.chenc.study_compose.home.ui.HomeScreen
+import site.chenc.study_compose.search.ui.SearchScreen
+import site.chenc.study_compose.search.viewmodel.UserViewModel
+import site.chenc.study_compose.setting.ui.SettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Layout() {
-    var selectedPage by remember { mutableIntStateOf(0) }
+    val navController = rememberNavController()
+    // 获取当前路由
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     // 定义导航项和对应的内容
     val navigationItems = listOf(
         NavigationItem(
             title = stringResource(R.string.home),
             icon = Icons.Default.Home,
-            content = { Text("首页内容", fontSize = 24.sp, textAlign = TextAlign.Center) }
+            route = "home",
         ),
         NavigationItem(
             title = stringResource(R.string.search),
             icon = Icons.Default.Search,
-            content = { Text("搜索内容", fontSize = 24.sp, textAlign = TextAlign.Center) }
+            route = "search",
         ),
         NavigationItem(
             title = stringResource(R.string.settings),
             icon = Icons.Default.Settings,
-            content = { Text("设置内容", fontSize = 24.sp, textAlign = TextAlign.Center) }
+            route = "setting",
         )
     )
 
@@ -67,12 +74,22 @@ fun Layout() {
         // 底部导航栏
         bottomBar = {
             NavigationBar {
-                navigationItems.forEachIndexed { index, item ->
+                navigationItems.forEachIndexed { _, item ->
                     NavigationBarItem(
                         icon = { Icon(item.icon, contentDescription = item.title) },
                         label = { Text(item.title) },
-                        selected = selectedPage == index,
-                        onClick = { selectedPage = index }
+                        selected = currentRoute == item.route,
+                        onClick = {
+                            if (currentRoute != item.route) {
+                                navController.navigate(item.route) {
+                                    popUpTo(currentRoute ?: "") {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+                        }
                     )
                 }
             }
@@ -82,10 +99,9 @@ fun Layout() {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding),
-                contentAlignment = Alignment.Center
+                    .padding(innerPadding)
             ) {
-                navigationItems[selectedPage].content()
+                AppNavigation(navController = navController)
             }
         }
     )
@@ -95,5 +111,20 @@ fun Layout() {
 data class NavigationItem(
     val title: String, // 导航项标题
     val icon: ImageVector, // 导航项图标
-    val content: @Composable () -> Unit // 导航项对应的内容
+    val route: String,
 )
+
+@Composable
+fun AppNavigation(navController: NavHostController) {  // 修改为NavHostController
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            HomeScreen()
+        }
+        composable("search") {
+            SearchScreen()
+        }
+        composable("setting") {
+            SettingsScreen()
+        }
+    }
+}
