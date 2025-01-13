@@ -1,7 +1,7 @@
 package site.chenc.study_compose.search.respository
 
+import site.chenc.study_compose.search.models.UserModel
 import site.chenc.study_compose.search.service.ApiService
-import site.chenc.study_compose.search.state.UserState
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(
     private val apiService: ApiService
 ) {
-    suspend fun getUser(name: String): UserState {
+    suspend fun getUser(name: String): UserModel {
         return apiService.getUser(name)
     }
 }
