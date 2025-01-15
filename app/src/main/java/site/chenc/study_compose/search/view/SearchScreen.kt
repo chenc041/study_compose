@@ -15,9 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import site.chenc.study_compose.R
 import site.chenc.study_compose.search.viewmodel.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,6 +32,15 @@ fun SearchScreen(viewModel: UserViewModel = hiltViewModel<UserViewModel>()) {
     }
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Home") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Blue,
+                    titleContentColor = Color.Black
+                ),
+            )
+        },
         content = { innerPadding ->
             // 根据状态显示 UI
             Column(modifier = Modifier.padding(innerPadding)) {
