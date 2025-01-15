@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
+import site.chenc.study_compose.AppRoutes
 import site.chenc.study_compose.R
 
 
@@ -20,17 +21,17 @@ object NavigationConfig {
         NavigationItem(
             title = R.string.home,
             icon = Icons.Default.Home,
-            route = "home",
+            route = AppRoutes.HOME,
         ),
         NavigationItem(
             title = R.string.search,
             icon = Icons.Default.Search,
-            route = "search",
+            route = AppRoutes.SEARCH,
         ),
         NavigationItem(
             title = R.string.settings,
             icon = Icons.Default.Settings,
-            route = "setting",
+            route = AppRoutes.SETTINGS,
         )
     )
 }
