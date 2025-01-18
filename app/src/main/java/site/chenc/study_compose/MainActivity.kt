@@ -29,10 +29,13 @@ class MainActivity : ComponentActivity() {
 fun RootApp() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppRoutes.SPLASH) {
-        composable(AppRoutes.SPLASH) {
+        composable(
+            route = AppRoutes.SPLASH
+        ) {
             SplashScreen(navController)
         }
-        composable(AppRoutes.ROOT) {
+        composable(
+            route = AppRoutes.ROOT        ) {
             LayoutScreen(navController)
         }
     }

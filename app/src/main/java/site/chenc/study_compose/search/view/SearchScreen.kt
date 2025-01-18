@@ -16,11 +16,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import site.chenc.study_compose.search.viewmodel.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(viewModel: UserViewModel = hiltViewModel<UserViewModel>()) {
+fun SearchScreen(navController: NavController ,viewModel: UserViewModel = hiltViewModel<UserViewModel>()) {
     // 监听 ViewModel 的状态
     val user by viewModel.user.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()

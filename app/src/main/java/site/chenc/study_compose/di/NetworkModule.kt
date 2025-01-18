@@ -1,4 +1,4 @@
-package site.chenc.study_compose.http
+package site.chenc.study_compose.di
 
 import dagger.Module
 import dagger.Provides
@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
+import site.chenc.study_compose.BuildConfig
 import site.chenc.study_compose.search.respository.UserRepository
 import site.chenc.study_compose.search.service.ApiService
 import javax.inject.Singleton
@@ -30,7 +31,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.github.com")
+            .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

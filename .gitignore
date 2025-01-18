@@ -13,3 +13,11 @@
 .externalNativeBuild
 .cxx
 local.properties
+sentry.properties
+config.properties
+app/release
+app/build
+keys
+app/prod
+app/dev
+app/qa

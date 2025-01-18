@@ -1,11 +1,19 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android") version "2.52"
+    id("io.sentry.android.gradle") version "4.14.1"
 }
 
+
+// 读取 local.properties 文件
+val configProperties = Properties()
+configProperties.load(FileInputStream(rootProject.file("config.properties")))
 android {
     namespace = "site.chenc.study_compose"
     compileSdk = 35
@@ -14,35 +22,71 @@ android {
         applicationId = "site.chenc.study_compose"
         minSdk = 30
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-
+        versionCode = System.getenv("VERSION_CODE")?.toInt() ?: 1
+        versionName = configProperties.getProperty("app.version", "")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters.add("arm64-v8a")
-            abiFilters.add("x86_64")
+            abiFilters.addAll(listOf("arm64-v8a", "x86_64"))
+        }
+    }
+
+    flavorDimensions += "environment"
+
+    val baseUrlConfig = mapOf(
+        "dev" to configProperties.getProperty("dev.base_url", ""),
+        "qa" to configProperties.getProperty("qa.base_url", ""),
+        "uat" to configProperties.getProperty("uat.base_url", ""),
+        "prod" to configProperties.getProperty("prod.base_url", "")
+    )
+
+    productFlavors {
+        baseUrlConfig.forEach { (flavorName, baseUrl) ->
+            create(flavorName) {
+                dimension = "environment"
+                buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+                if (flavorName == "dev") applicationIdSuffix = ".dev"
+                if (flavorName == "uat") applicationIdSuffix = ".uat"
+                if (flavorName == "qa") applicationIdSuffix = ".test"
+            }
         }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+
+        debug {
+            isMinifyEnabled = false
+            isDebuggable = true
+            isShrinkResources = false
+            applicationIdSuffix = ".debug"
+        }
+
+        all {
+            manifestPlaceholders["sentryDsn"] = configProperties.getProperty("sentryDsn", "")
+        }
     }
+
+    val javaVersion = JavaVersion.VERSION_11
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
+
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = javaVersion.toString()
     }
+
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -70,6 +114,10 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.sentry.android)
+    implementation(libs.sentry.compose.android)
+
     kapt(libs.hilt.compiler)
 
 

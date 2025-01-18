@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Study_compose" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Study_compose" parent="android:Theme.Material.Light.NoActionBar" >
+        <!-- 设置状态栏背景色为白色 -->
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <!-- 设置状态栏文字和图标为深色（适用于浅色背景） -->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 </resources>

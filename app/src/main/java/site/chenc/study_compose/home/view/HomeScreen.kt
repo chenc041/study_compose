@@ -16,10 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -32,7 +33,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         },
         content = { innerPadding ->
             // 根据状态显示 UI
-            LazyColumn(modifier = modifier.padding(innerPadding)) {
+            LazyColumn(modifier = Modifier.padding(innerPadding)) {
                 items(100) { index ->
                     Card1(index)
                     Spacer(modifier = Modifier.height(10.dp))

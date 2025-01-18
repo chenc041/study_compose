@@ -1,6 +1,5 @@
 package site.chenc.study_compose.layout
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -52,9 +51,9 @@ fun LayoutScreen(navController: NavController) {
     ) { innerPadding ->
         Box(modifier = Modifier.fillMaxSize().padding(top = 0.dp, bottom = innerPadding.calculateBottomPadding())) {
             when (selectedIndex) {
-                0 -> HomeScreen()
-                1 -> SearchScreen()
-                2 -> SettingsScreen()
+                0 -> HomeScreen(navController)
+                1 -> SearchScreen(navController)
+                2 -> SettingsScreen(navController)
             }
         }
     }
