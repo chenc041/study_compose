@@ -49,6 +49,7 @@ fun Card1(index: Int) {
     Card(
         modifier = Modifier
             .height(100.dp)
+            .padding(horizontal = 10.dp)
             .fillMaxWidth()
     ) {
         Row {
