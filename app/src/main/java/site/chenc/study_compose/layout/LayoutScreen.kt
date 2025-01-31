@@ -49,7 +49,11 @@ fun LayoutScreen(navController: NavController) {
             }
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.fillMaxSize().padding(top = 0.dp, bottom = innerPadding.calculateBottomPadding() - 10.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 0.dp, bottom = innerPadding.calculateBottomPadding() - 10.dp)
+        ) {
             when (selectedIndex) {
                 0 -> HomeScreen(navController)
                 1 -> SearchScreen(navController)

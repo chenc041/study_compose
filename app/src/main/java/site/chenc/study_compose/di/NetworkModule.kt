@@ -12,6 +12,7 @@ import site.chenc.study_compose.BuildConfig
 import site.chenc.study_compose.search.respository.UserRepository
 import site.chenc.study_compose.search.service.ApiService
 import javax.inject.Singleton
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
