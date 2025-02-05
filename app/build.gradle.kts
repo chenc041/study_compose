@@ -127,6 +127,7 @@ dependencies {
 
     implementation(libs.sentry.android)
     implementation(libs.sentry.compose.android)
+    implementation(libs.accompanist.permissions)
 
     kapt(libs.hilt.compiler)
 
