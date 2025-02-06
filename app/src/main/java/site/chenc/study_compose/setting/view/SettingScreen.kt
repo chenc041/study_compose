@@ -1,23 +1,53 @@
 package site.chenc.study_compose.setting.view
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import android.Manifest
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import kotlinx.coroutines.delay
 import site.chenc.study_compose.R
+import site.chenc.study_compose.utils.NotificationUtils
 
-@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun SettingsScreen(navController: NavController) {
+    val context = LocalContext.current
+    val permissionNotificationState = rememberPermissionState(
+        permission = Manifest.permission.POST_NOTIFICATIONS
+    )
+
+    LaunchedEffect(Unit) {
+        delay(3000)
+        NotificationUtils.sendNotification(
+            context = context,
+            title = "测试消息通知",
+            content = "测试消息通知内容",
+            iconRes = R.drawable.ic_launcher_foreground
+        )
+    }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -28,12 +58,42 @@ fun SettingsScreen(navController: NavController) {
             )
         },
         content = { innerPadding ->
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp)
                     .padding(innerPadding)
             ) {
-                Text(text = "Settings")
+                Button(onClick = {
+                    if (permissionNotificationState.status.isGranted) {
+                        NotificationUtils.sendNotification(
+                            context = context,
+                            title = "测试消息通知",
+                            content = "测试消息通知内容",
+                            iconRes = R.drawable.ic_launcher_foreground
+                        )
+                    } else {
+                        permissionNotificationState.launchPermissionRequest()
+                    }
+                }, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(R.string.notification))
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(R.string.location))
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(R.string.callLog))
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(R.string.phone_number))
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(R.string.sms))
+                }
             }
 
         }

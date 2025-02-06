@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import site.chenc.study_compose.layout.LayoutScreen
 import site.chenc.study_compose.splash.view.SplashScreen
 import site.chenc.study_compose.ui.theme.Study_composeTheme
+import site.chenc.study_compose.utils.NotificationUtils
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
+        NotificationUtils.createNotificationChannel(this)
         enableEdgeToEdge()
         setContent {
             Study_composeTheme {

@@ -3,4 +3,10 @@
     <string name="home">首页</string>
     <string name="search">搜索</string>
     <string name="settings">设置</string>
+
+    <string name="notification">消息通知</string>
+    <string name="location">位置定位</string>
+    <string name="callLog">通话记录</string>
+    <string name="phone_number">电话号码</string>
+    <string name="sms">短信</string>
 </resources>
