@@ -11,7 +11,7 @@ import site.chenc.study_compose.search.models.UserModel
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(
+class SearchViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
     private val _user = MutableStateFlow<UserModel?>(null)

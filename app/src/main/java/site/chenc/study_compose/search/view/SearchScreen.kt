@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import site.chenc.study_compose.search.viewmodel.UserViewModel
 import site.chenc.study_compose.R
+import site.chenc.study_compose.search.viewmodel.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navController: NavController ,viewModel: UserViewModel = hiltViewModel<UserViewModel>()) {
+fun SearchScreen(navController: NavController ,viewModel: SearchViewModel = hiltViewModel<SearchViewModel>()) {
     // 监听 ViewModel 的状态
     val user by viewModel.user.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
