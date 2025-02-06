@@ -10,18 +10,24 @@ import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import site.chenc.study_compose.R
+import java.util.concurrent.atomic.AtomicInteger
+import javax.inject.Inject
 
-object NotificationUtils {
-    private const val CHANNEL_ID = "study_compose_channel"
-    private const val CHANNEL_NAME = "study_compose_channel_name"
+class NotificationUtils @Inject constructor(
+    private val context: Context
+) {
 
-    fun createNotificationChannel(context: Context) {
+    fun createNotificationChannel() {
+        val defaultChannelId = context.resources.getString(R.string.default_channel_id)
+        val defaultChannelName = context.resources.getString(R.string.default_channel_name)
+        var defaultDescription = context.resources.getString(R.string.default_channel_description)
         val channel = NotificationChannel(
-            CHANNEL_ID,
-            CHANNEL_NAME,
-            NotificationManager.IMPORTANCE_DEFAULT
+            defaultChannelId,
+            defaultChannelName,
+            NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = "Default notifications for the app"
+            description = defaultDescription
         }
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(channel)
@@ -29,18 +35,18 @@ object NotificationUtils {
 
     // 发送通知
     fun sendNotification(
-        context: Context,
         title: String,
         content: String,
         @DrawableRes iconRes: Int,
         pendingIntent: PendingIntent? = null,
     ) {
         // 构建通知
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val defaultChannelId = context.resources.getString(R.string.default_channel_id)
+        val builder = NotificationCompat.Builder(context, defaultChannelId)
             .setSmallIcon(iconRes)
             .setContentTitle(title)
             .setContentText(content)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
 
         pendingIntent?.let { builder.setContentIntent(it) }
@@ -56,6 +62,6 @@ object NotificationUtils {
             }
         }
     }
-
-    private fun getUniqueId(): Int = System.currentTimeMillis().toInt()
+    private val notificationId = AtomicInteger(0)
+    fun getUniqueId(): Int = notificationId.getAndIncrement()
 }

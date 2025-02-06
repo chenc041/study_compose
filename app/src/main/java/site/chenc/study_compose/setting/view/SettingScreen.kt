@@ -21,32 +21,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.delay
 import site.chenc.study_compose.R
+import site.chenc.study_compose.setting.viewmodel.SettingViewModel
 import site.chenc.study_compose.utils.NotificationUtils
+import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
-fun SettingsScreen(navController: NavController) {
-    val context = LocalContext.current
+fun SettingsScreen(navController: NavController, settingViewModel: SettingViewModel = hiltViewModel<SettingViewModel>()) {
+
     val permissionNotificationState = rememberPermissionState(
         permission = Manifest.permission.POST_NOTIFICATIONS
     )
-
-    LaunchedEffect(Unit) {
-        delay(3000)
-        NotificationUtils.sendNotification(
-            context = context,
-            title = "测试消息通知",
-            content = "测试消息通知内容",
-            iconRes = R.drawable.ic_launcher_foreground
-        )
-    }
 
     Scaffold(
         topBar = {
@@ -66,12 +59,7 @@ fun SettingsScreen(navController: NavController) {
             ) {
                 Button(onClick = {
                     if (permissionNotificationState.status.isGranted) {
-                        NotificationUtils.sendNotification(
-                            context = context,
-                            title = "测试消息通知",
-                            content = "测试消息通知内容",
-                            iconRes = R.drawable.ic_launcher_foreground
-                        )
+                        settingViewModel.senNotification();
                     } else {
                         permissionNotificationState.launchPermissionRequest()
                     }

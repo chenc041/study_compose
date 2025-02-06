@@ -30,9 +30,12 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var snackbarHostState: SnackbarHostState
 
+    @Inject
+    lateinit var notificationUtils: NotificationUtils
+
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
-        NotificationUtils.createNotificationChannel(this)
+        notificationUtils.createNotificationChannel()
         enableEdgeToEdge()
         setContent {
             Study_composeTheme {
