@@ -7,11 +7,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import site.chenc.study_compose.R
 import site.chenc.study_compose.utils.NotificationUtils
+import site.chenc.study_compose.utils.SharedPreferencesUtils
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val notificationUtils: NotificationUtils,
+    private val sharedPreferencesUtils: SharedPreferencesUtils,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -21,5 +23,13 @@ class SettingViewModel @Inject constructor(
             content = context.getString(R.string.test_notification_content),
             iconRes = R.drawable.ic_launcher_foreground
         )
+    }
+
+    fun setStringValue(key: String, value: String) {
+        sharedPreferencesUtils.saveStringValue(key, value)
+    }
+
+    fun getStringValue(key: String): String {
+        return sharedPreferencesUtils.getStringValue(key).toString()
     }
 }

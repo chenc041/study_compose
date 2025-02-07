@@ -3,7 +3,6 @@
     <string name="home">首页</string>
     <string name="search">搜索</string>
     <string name="settings">设置</string>
-
     <string name="notification">消息通知</string>
     <string name="location">位置定位</string>
     <string name="callLog">通话记录</string>
@@ -14,6 +13,9 @@
     <string name="default_channel_description">消息通知, 用来发送一些消息</string>
     <string name="test_notification_title">测试消息标题</string>
     <string name="test_notification_content">测试消息内容</string>
+    <string name="set_string_value">设置字符串</string>
+    <string name="get_string_value">获取字符串</string>
+    <string name="shared_preferences_tag">shared_preferences_tag</string>
 
 
 </resources>

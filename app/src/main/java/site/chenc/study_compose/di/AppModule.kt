@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import site.chenc.study_compose.utils.NotificationUtils
+import site.chenc.study_compose.utils.SharedPreferencesUtils
 import javax.inject.Singleton
 
 @Module
@@ -26,5 +27,11 @@ object AppModule {
         val notificationUtils = NotificationUtils(context)
         notificationUtils.createNotificationChannel()
         return notificationUtils
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferencesUtils(@ApplicationContext context: Context): SharedPreferencesUtils {
+        return SharedPreferencesUtils(context)
     }
 }
