@@ -20,17 +20,19 @@ class NotificationUtils @Inject constructor(
 
     fun createNotificationChannel() {
         val defaultChannelId = context.resources.getString(R.string.default_channel_id)
-        val defaultChannelName = context.resources.getString(R.string.default_channel_name)
-        var defaultDescription = context.resources.getString(R.string.default_channel_description)
-        val channel = NotificationChannel(
-            defaultChannelId,
-            defaultChannelName,
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply {
-            description = defaultDescription
-        }
         val manager = context.getSystemService(NotificationManager::class.java)
-        manager.createNotificationChannel(channel)
+        if (manager.getNotificationChannel(defaultChannelId) == null) {
+            val defaultChannelName = context.resources.getString(R.string.default_channel_name)
+            var defaultDescription = context.resources.getString(R.string.default_channel_description)
+            val channel = NotificationChannel(
+                defaultChannelId,
+                defaultChannelName,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = defaultDescription
+            }
+            manager.createNotificationChannel(channel)
+        }
     }
 
     // 发送通知

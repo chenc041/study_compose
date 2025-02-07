@@ -1,5 +1,7 @@
 package site.chenc.study_compose.layout
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,6 +25,7 @@ import site.chenc.study_compose.home.view.HomeScreen
 import site.chenc.study_compose.search.view.SearchScreen
 import site.chenc.study_compose.setting.view.SettingsScreen
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LayoutScreen(navController: NavController) {

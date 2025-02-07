@@ -1,8 +1,10 @@
 package site.chenc.study_compose
 
+import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import site.chenc.study_compose.layout.LayoutScreen
 import site.chenc.study_compose.splash.view.SplashScreen
 import site.chenc.study_compose.ui.theme.Study_composeTheme
-import site.chenc.study_compose.utils.NotificationUtils
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var snackbarHostState: SnackbarHostState
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -64,6 +66,7 @@ fun CustomSnackbarHost(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun RootApp(paddingValues: PaddingValues) {
     val navController = rememberNavController()

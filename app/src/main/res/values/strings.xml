@@ -12,6 +12,8 @@
     <string name="default_channel_name">默认消息通知</string>
     <string name="default_channel_id">default_channel_id</string>
     <string name="default_channel_description">消息通知, 用来发送一些消息</string>
+    <string name="test_notification_title">测试消息标题</string>
+    <string name="test_notification_content">测试消息内容</string>
 
 
 </resources>
