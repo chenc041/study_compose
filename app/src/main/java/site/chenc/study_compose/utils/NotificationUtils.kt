@@ -34,7 +34,7 @@ class NotificationUtils @Inject constructor(
     }
 
     // 发送通知
-    fun sendNotification(
+    fun sendDefaultNotification(
         title: String,
         content: String,
         @DrawableRes iconRes: Int,

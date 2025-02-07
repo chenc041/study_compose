@@ -12,7 +12,7 @@ class SettingViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun senNotification() {
-        notificationUtils.sendNotification(
+        notificationUtils.sendDefaultNotification(
             title = "测试消息通知",
             content = "测试消息通知内容",
             iconRes = R.drawable.ic_launcher_foreground

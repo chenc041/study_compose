@@ -23,6 +23,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNotificationUtils(@ApplicationContext context: Context): NotificationUtils {
-        return NotificationUtils(context)
+        val notificationUtils = NotificationUtils(context)
+        notificationUtils.createNotificationChannel()
+        return notificationUtils
     }
 }
