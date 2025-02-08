@@ -94,6 +94,12 @@ fun SettingsScreen(
                 }, modifier = Modifier.fillMaxWidth()) {
                     Text(text = stringResource(R.string.get_string_value) + ": $text")
                 }
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {
+                    settingViewModel.removeKey("chen")
+                }, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = "删除")
+                }
 
             }
 

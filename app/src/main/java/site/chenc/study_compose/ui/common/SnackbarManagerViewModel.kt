@@ -12,6 +12,9 @@ import javax.inject.Inject
 class SnackbarManagerViewModel @Inject constructor(
     private val snackbarHostState: SnackbarHostState
 ) : ViewModel() {
+
+    val hostState: SnackbarHostState get() = snackbarHostState
+
     fun showSnackbar(
         message: String,
         actionLabel: String? = null,

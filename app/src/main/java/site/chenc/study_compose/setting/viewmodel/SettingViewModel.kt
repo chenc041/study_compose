@@ -32,4 +32,8 @@ class SettingViewModel @Inject constructor(
     fun getStringValue(key: String): String {
         return sharedPreferencesUtils.getStringValue(key).toString()
     }
+
+    fun removeKey(key: String) {
+        sharedPreferencesUtils.removeKey(key)
+    }
 }

@@ -32,4 +32,9 @@ class SharedPreferencesUtils @Inject constructor(
     fun getIntValue(key: String): Int? {
         return sharedPreferences.getInt(key, 0)
     }
+
+    fun removeKey(key: String) {
+        editor.remove(key)
+        editor.apply()
+    }
 }

@@ -12,24 +12,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import site.chenc.study_compose.layout.LayoutScreen
 import site.chenc.study_compose.splash.view.SplashScreen
+import site.chenc.study_compose.ui.common.SnackbarManagerViewModel
 import site.chenc.study_compose.ui.theme.Study_composeTheme
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var snackbarHostState: SnackbarHostState
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
@@ -39,9 +37,7 @@ class MainActivity : ComponentActivity() {
             Study_composeTheme {
                 Scaffold(
                     snackbarHost = {
-                        CustomSnackbarHost(
-                            hostState = snackbarHostState,
-                        )
+                        CustomSnackbarHost()
                     },
                 ) { paddingValues -> RootApp(paddingValues) }
             }
@@ -51,12 +47,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CustomSnackbarHost(
-    hostState: SnackbarHostState,
-    modifier: Modifier = Modifier
+    snackbarManagerViewModel: SnackbarManagerViewModel = hiltViewModel<SnackbarManagerViewModel>()
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         SnackbarHost(
-            hostState = hostState,
+            hostState = snackbarManagerViewModel.hostState,
             modifier = Modifier
                 .align(Alignment.TopCenter) // 在 Box 内使用 align
                 .padding(top = 100.dp)
