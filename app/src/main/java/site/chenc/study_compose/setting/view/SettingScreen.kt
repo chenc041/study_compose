@@ -2,6 +2,10 @@ package site.chenc.study_compose.setting.view
 
 import android.Manifest
 import android.os.Build
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -43,6 +47,10 @@ fun SettingsScreen(
         permission = Manifest.permission.POST_NOTIFICATIONS
     )
 
+    val image = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) {
+        Log.d("TAG", "onActivityResult: $it");
+    }
+
     var text by remember { mutableStateOf("") }
 
     Scaffold(
@@ -79,7 +87,8 @@ fun SettingsScreen(
                     Text(text = stringResource(R.string.callLog))
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+                Button(onClick = {
+                }, modifier = Modifier.fillMaxWidth()) {
                     Text(text = stringResource(R.string.phone_number))
                 }
                 Spacer(modifier = Modifier.height(10.dp))
