@@ -18,8 +18,8 @@ navigationCompose = "2.8.7"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 runtimeLivedata = "1.7.8"
-sentryAndroid = "8.1.0"
-sentryComposeAndroid = "8.1.0"
+sentryAndroid = "8.2.0"
+sentryComposeAndroid = "8.2.0"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
