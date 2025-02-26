@@ -129,6 +129,7 @@ dependencies {
     implementation(libs.sentry.compose.android)
     implementation(libs.accompanist.permissions)
     implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.lottie.compose)
 
     kapt(libs.hilt.compiler)
