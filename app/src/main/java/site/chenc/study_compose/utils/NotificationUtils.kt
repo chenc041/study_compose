@@ -10,12 +10,13 @@ import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import site.chenc.study_compose.R
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 class NotificationUtils @Inject constructor(
-    private val context: Context
+   @ApplicationContext private val context: Context
 ) {
 
     fun createNotificationChannel() {

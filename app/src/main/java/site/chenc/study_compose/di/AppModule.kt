@@ -29,9 +29,4 @@ object AppModule {
         return notificationUtils
     }
 
-    @Provides
-    @Singleton
-    fun provideSharedPreferencesUtils(@ApplicationContext context: Context): SharedPreferencesUtils {
-        return SharedPreferencesUtils(context)
-    }
 }

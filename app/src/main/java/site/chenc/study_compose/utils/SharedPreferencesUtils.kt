@@ -1,11 +1,12 @@
 package site.chenc.study_compose.utils
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import site.chenc.study_compose.R
 import javax.inject.Inject
 
 class SharedPreferencesUtils @Inject constructor(
-    private val context: Context
+   @ApplicationContext private val context: Context
 ) {
     private  val sharedPreferencesTag = context.resources.getString(R.string.shared_preferences_tag)
     private val sharedPreferences =

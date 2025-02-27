@@ -107,7 +107,13 @@ fun SettingsScreen(
                 Button(onClick = {
                     settingViewModel.removeKey("chen")
                 }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = "删除")
+                    Text(text = stringResource(R.string.delete_preference_key))
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {
+                    settingViewModel.openSettings()
+                }, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(R.string.open_settings))
                 }
 
             }

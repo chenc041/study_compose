@@ -16,6 +16,8 @@
     <string name="set_string_value">设置字符串</string>
     <string name="get_string_value">获取字符串</string>
     <string name="shared_preferences_tag">shared_preferences_tag</string>
+    <string name="open_settings">打开设置页面</string>
+    <string name="delete_preference_key">删除缓存的key</string>
 
 
 </resources>

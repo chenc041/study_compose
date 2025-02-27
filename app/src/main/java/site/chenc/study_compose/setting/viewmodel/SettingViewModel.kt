@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import site.chenc.study_compose.R
+import site.chenc.study_compose.utils.CommonUtils
 import site.chenc.study_compose.utils.NotificationUtils
 import site.chenc.study_compose.utils.SharedPreferencesUtils
 import javax.inject.Inject
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val notificationUtils: NotificationUtils,
+    private val commonUtils: CommonUtils,
     private val sharedPreferencesUtils: SharedPreferencesUtils,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
@@ -30,10 +32,14 @@ class SettingViewModel @Inject constructor(
     }
 
     fun getStringValue(key: String): String {
-        return sharedPreferencesUtils.getStringValue(key).toString()
+        return sharedPreferencesUtils.getStringValue(key) ?: ""
     }
 
     fun removeKey(key: String) {
         sharedPreferencesUtils.removeKey(key)
+    }
+
+    fun openSettings() {
+        commonUtils.openAppSettings()
     }
 }
