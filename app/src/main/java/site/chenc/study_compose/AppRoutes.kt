@@ -6,4 +6,7 @@ object AppRoutes {
     const val HOME = "home"
     const val SEARCH = "search"
     const val SETTINGS = "settings"
+
+
+    const val SETTINGS_DETAIL = "settings/detail"
 }

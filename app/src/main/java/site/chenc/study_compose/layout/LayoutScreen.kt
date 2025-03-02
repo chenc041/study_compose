@@ -2,6 +2,7 @@ package site.chenc.study_compose.layout
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,7 +32,7 @@ import site.chenc.study_compose.setting.view.SettingsScreen
 @Composable
 fun LayoutScreen(navController: NavController) {
     // 当前选中的底部导航栏下标
-    var selectedIndex by remember { mutableIntStateOf(0) }
+    var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
     Scaffold(
         bottomBar = {
             NavigationBar(containerColor = Color.White) {

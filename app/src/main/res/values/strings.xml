@@ -18,6 +18,8 @@
     <string name="shared_preferences_tag">shared_preferences_tag</string>
     <string name="open_settings">打开设置页面</string>
     <string name="delete_preference_key">删除缓存的key</string>
+    <string name="nav_to_detail">跳转详情页</string>
+    <string name="detail_title">详情页</string>
 
 
 </resources>

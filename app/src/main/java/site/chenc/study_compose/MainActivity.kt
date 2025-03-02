@@ -5,6 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import site.chenc.study_compose.layout.LayoutScreen
+import site.chenc.study_compose.setting.view.SettingsDetailScreen
 import site.chenc.study_compose.splash.view.SplashScreen
 import site.chenc.study_compose.ui.common.SnackbarManagerViewModel
 import site.chenc.study_compose.ui.theme.Study_composeTheme
@@ -61,6 +66,11 @@ fun CustomSnackbarHost(
     }
 }
 
+
+fun slideOutVertically() {
+    TODO("Not yet implemented")
+}
+
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun RootApp(paddingValues: PaddingValues) {
@@ -70,7 +80,33 @@ fun RootApp(paddingValues: PaddingValues) {
         startDestination = AppRoutes.SPLASH,
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 0.dp, bottom = paddingValues.calculateBottomPadding())
+            .padding(top = 0.dp, bottom = paddingValues.calculateBottomPadding()),
+
+        enterTransition = {
+            slideIntoContainer(
+                towards = SlideDirection.Left,
+                animationSpec = tween(300, easing = LinearOutSlowInEasing)
+            )
+        },
+        exitTransition = {
+            slideOutOfContainer(
+                towards = SlideDirection.Left,
+                animationSpec = tween(300, easing = FastOutLinearInEasing)
+            )
+        },
+        // B → A 返回动画（反向）
+        popEnterTransition = {
+            slideIntoContainer(
+                towards = SlideDirection.Right,
+                animationSpec = tween(300, easing = LinearOutSlowInEasing)
+            )
+        },
+        popExitTransition = {
+            slideOutOfContainer(
+                towards = SlideDirection.Right,
+                animationSpec = tween(300, easing = FastOutLinearInEasing)
+            )
+        }
     ) {
         composable(
             route = AppRoutes.SPLASH
@@ -81,6 +117,12 @@ fun RootApp(paddingValues: PaddingValues) {
             route = AppRoutes.ROOT
         ) {
             LayoutScreen(navController)
+        }
+
+        composable(
+            route = AppRoutes.SETTINGS_DETAIL,
+        ) {
+            SettingsDetailScreen(navController)
         }
     }
 }

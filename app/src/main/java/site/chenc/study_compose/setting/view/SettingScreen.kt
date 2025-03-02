@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import site.chenc.study_compose.AppRoutes
 import site.chenc.study_compose.R
 import site.chenc.study_compose.setting.viewmodel.SettingViewModel
 
@@ -113,6 +114,13 @@ fun SettingsScreen(
                     settingViewModel.openSettings()
                 }, modifier = Modifier.fillMaxWidth()) {
                     Text(text = stringResource(R.string.open_settings))
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {
+                    navController.navigate(AppRoutes.SETTINGS_DETAIL)
+                }, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(R.string.nav_to_detail))
                 }
 
             }
