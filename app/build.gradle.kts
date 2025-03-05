@@ -95,7 +95,7 @@ androidComponents {
         // 过滤掉不需要的构建变体
         val variantName = variantBuilder.name
         if (variantName in listOf("devRelease", "qaDebug", "uatDebug", "prodDebug")) {
-            variantBuilder.enabled = false
+            variantBuilder.enable = false
         }
     }
 }

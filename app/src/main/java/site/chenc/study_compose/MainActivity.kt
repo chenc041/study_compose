@@ -67,10 +67,6 @@ fun CustomSnackbarHost(
 }
 
 
-fun slideOutVertically() {
-    TODO("Not yet implemented")
-}
-
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun RootApp(paddingValues: PaddingValues) {
