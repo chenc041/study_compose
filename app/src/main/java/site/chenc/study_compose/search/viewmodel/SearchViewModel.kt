@@ -43,7 +43,9 @@ class SearchViewModel @Inject constructor(
                     is HttpException -> "请求错误, 状态码 ${exception.code()}"
                     else -> exception.message ?: "未知错误"
                 }
-                UiState.Error(errorMessage)
+                _userState.update {
+                    UiState.Error(errorMessage)
+                }
 
             }.launchIn(viewModelScope)
     }
