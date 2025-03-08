@@ -1,5 +1,7 @@
 package site.chenc.study_compose.search.respository
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import site.chenc.study_compose.search.models.UserModel
 import site.chenc.study_compose.search.service.ApiService
 import javax.inject.Inject
@@ -9,7 +11,8 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(
     private val apiService: ApiService
 ) {
-    suspend fun getUser(name: String): UserModel {
-        return apiService.getUser(name)
+     fun getUser(name: String): Flow<UserModel> = flow {
+        var response = apiService.getUser(name)
+         emit(response)
     }
 }

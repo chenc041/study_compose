@@ -3,7 +3,6 @@ package site.chenc.study_compose.search.view
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -13,24 +12,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import site.chenc.study_compose.R
+import site.chenc.study_compose.models.UiState
 import site.chenc.study_compose.search.viewmodel.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(navController: NavController ,viewModel: SearchViewModel = hiltViewModel<SearchViewModel>()) {
     // 监听 ViewModel 的状态
-    val user by viewModel.user.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val error by viewModel.error.collectAsState()
+    val userState by viewModel.userState.collectAsState()
+    val name by remember { mutableStateOf("chenc041") }
 
     // 在 LaunchedEffect 中触发网络请求
-    LaunchedEffect(Unit) {
-        viewModel.fetchUser("chenc041")
+    LaunchedEffect(name) {
+        viewModel.fetchUser(name)
     }
 
     Scaffold(
@@ -45,15 +46,17 @@ fun SearchScreen(navController: NavController ,viewModel: SearchViewModel = hilt
         content = { innerPadding ->
             // 根据状态显示 UI
             Column(modifier = Modifier.padding(innerPadding)) {
-                if (isLoading) {
-                    CircularProgressIndicator()
-                } else if (error != null) {
-                    Text(text = "Error: ${error!!}", color = MaterialTheme.colorScheme.error)
-                } else {
-                    user?.let {
-                        Text(text = "ID: ${it.id}")
-                        Text(text = "Name: ${it.name}")
-                        Text(text = "Email: ${it.login}")
+                when(val user = userState) {
+                    is UiState.Success -> {
+                        Text(text = "ID: ${user.data.id}")
+                        Text(text = "Name: ${user.data.name}")
+                        Text(text = "Email: ${user.data.login}")
+                    }
+                    is UiState.Error -> {
+                        Text(text = "Error: ${user.message}")
+                    }
+                    else -> {
+                        Text(text = "Loading...")
                     }
                 }
             }
