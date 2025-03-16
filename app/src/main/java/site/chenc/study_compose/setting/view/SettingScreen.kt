@@ -123,6 +123,14 @@ fun SettingsScreen(
                     Text(text = stringResource(R.string.nav_to_detail))
                 }
 
+
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {
+                    navController.navigate(AppRoutes.CAMERA)
+                }, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = "相机页面")
+                }
+
             }
 
         }

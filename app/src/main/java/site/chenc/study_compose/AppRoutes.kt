@@ -9,4 +9,6 @@ object AppRoutes {
 
 
     const val SETTINGS_DETAIL = "settings/detail"
+
+    const val CAMERA = "setting/camera"
 }

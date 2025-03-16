@@ -138,7 +138,7 @@ dependencies {
     implementation (libs.androidx.camera.video)
     implementation(libs.androidx.camera.view)
 
-
+    implementation(libs.barcode.scanning)
 
     kapt(libs.hilt.compiler)
 
