@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        window.isNavigationBarContrastEnforced = false
         setContent {
             Study_composeTheme {
                 RootApp()

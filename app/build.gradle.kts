@@ -1,3 +1,5 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -14,6 +16,11 @@ plugins {
 // 读取 local.properties 文件
 val configProperties = Properties()
 configProperties.load(FileInputStream(rootProject.file("config.properties")))
+
+val currentDateTime: LocalDateTime = LocalDateTime.now()
+val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyMMddHH")
+val versionCodeValue = currentDateTime.format(formatter).toInt()
+
 android {
     namespace = "site.chenc.study_compose"
     compileSdk = 35
@@ -22,7 +29,7 @@ android {
         applicationId = "site.chenc.study_compose"
         minSdk = 30
         targetSdk = 35
-        versionCode = System.getenv("VERSION_CODE")?.toInt() ?: 1
+        versionCode = versionCodeValue
         versionName = configProperties.getProperty("app.version", "")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
