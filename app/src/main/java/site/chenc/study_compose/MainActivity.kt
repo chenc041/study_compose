@@ -9,9 +9,17 @@ import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,19 +28,23 @@ import site.chenc.study_compose.layout.LayoutScreen
 import site.chenc.study_compose.setting.view.QRCodeScannerScreen
 import site.chenc.study_compose.setting.view.SettingsDetailScreen
 import site.chenc.study_compose.splash.view.SplashScreen
+import site.chenc.study_compose.ui.common.SnackbarManagerViewModel
 import site.chenc.study_compose.ui.theme.Study_composeTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         window.isNavigationBarContrastEnforced = false
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             Study_composeTheme {
-                RootApp()
+                Scaffold(
+                    snackbarHost = { CustomSnackbarHost() },
+                    content = { scaffoldPadding  -> RootApp(scaffoldPadding ) }
+                )
             }
         }
     }
@@ -40,14 +52,13 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun RootApp() {
+fun RootApp(scaffoldPadding : PaddingValues) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = AppRoutes.SPLASH,
         modifier = Modifier
             .fillMaxSize(),
-
         enterTransition = {
             slideIntoContainer(
                 towards = SlideDirection.Left,
@@ -60,7 +71,6 @@ fun RootApp() {
                 animationSpec = tween(300, easing = FastOutLinearInEasing)
             )
         },
-        // B → A 返回动画（反向）
         popEnterTransition = {
             slideIntoContainer(
                 towards = SlideDirection.Right,
@@ -84,17 +94,30 @@ fun RootApp() {
         ) {
             LayoutScreen(navController)
         }
-
         composable(
             route = AppRoutes.SETTINGS_DETAIL,
         ) {
             SettingsDetailScreen(navController)
         }
-
         composable(
             route = AppRoutes.CAMERA
         ) {
             QRCodeScannerScreen(navController)
         }
+    }
+}
+
+@Composable
+fun CustomSnackbarHost(
+    snackbarManagerViewModel: SnackbarManagerViewModel = hiltViewModel<SnackbarManagerViewModel>()
+) {
+    SnackbarHost(
+        hostState = snackbarManagerViewModel.hostState,
+    ) { snackbarData ->
+        Snackbar(
+            snackbarData = snackbarData,
+            contentColor = Color.Black,
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        )
     }
 }

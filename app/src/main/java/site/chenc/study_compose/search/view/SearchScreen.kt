@@ -39,7 +39,7 @@ fun SearchScreen(navController: NavController ,viewModel: SearchViewModel = hilt
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(id = R.string.search)) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
                 ),
             )
         },

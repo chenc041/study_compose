@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -58,7 +59,8 @@ fun SettingsScreen(
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(id = R.string.settings)) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    titleContentColor = Color.Black
+                    titleContentColor = Color.Black,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
                 ),
             )
         },

@@ -1,8 +1,11 @@
 package site.chenc.study_compose.home.view
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,29 +29,23 @@ fun HomeScreen(
     navController: NavController,
     snackbarManagerViewModel: SnackbarManagerViewModel = hiltViewModel<SnackbarManagerViewModel>()
 ) {
-
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(id = R.string.home)) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
-            )
-        },
-        content = { innerPadding ->
-            // 根据状态显示 UI
-            LazyColumn(modifier = Modifier.padding(innerPadding)) {
-                items(100) { index ->
-                    TaskItem(
-                        index = index,
-                        onTaskCompleted = {
-                            snackbarManagerViewModel.showSnackbar("任务完成")
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
+    Column(modifier = Modifier.fillMaxSize()) {
+        CenterAlignedTopAppBar(
+            title = { Text(stringResource(id = R.string.home)) },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+            ),
+        )
+        LazyColumn(modifier = Modifier.fillMaxSize().weight(1f)) {
+            items(100) { index ->
+                TaskItem(
+                    index = index,
+                    onTaskCompleted = {
+                        snackbarManagerViewModel.showSnackbar("任务完成")
+                    }
+                )
+                Spacer(modifier = Modifier.height(10.dp))
             }
         }
-    )
+    }
 }
