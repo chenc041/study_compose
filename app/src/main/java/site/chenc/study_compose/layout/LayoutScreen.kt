@@ -23,6 +23,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -48,7 +49,7 @@ import site.chenc.study_compose.ui.common.SnackbarManagerViewModel
 @Composable
 fun LayoutScreen() {
     val navController = rememberNavController()
-    var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
+    var selectedIndex by rememberSaveable { mutableStateOf(AppRoutes.HOME) }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 
@@ -57,21 +58,21 @@ fun LayoutScreen() {
     Scaffold(
         topBar = {
             when(selectedIndex) {
-                0 ->
+                AppRoutes.HOME ->
                     CenterAlignedTopAppBar(
                         title = { Text(stringResource(id = R.string.home)) },
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
                         ),
                     )
-                1 ->
+                AppRoutes.SEARCH ->
                     CenterAlignedTopAppBar(
                         title = { Text(stringResource(id = R.string.search)) },
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
                         ),
                     )
-                2 ->
+                AppRoutes.SETTINGS ->
                     CenterAlignedTopAppBar(
                         title = { Text(stringResource(id = R.string.settings)) },
                         colors = TopAppBarDefaults.topAppBarColors(
@@ -123,9 +124,9 @@ fun LayoutScreen() {
                     route = AppRoutes.ROOT
                 ) {
                     when (selectedIndex) {
-                        0 -> HomeScreen(navController)
-                        1 -> SearchScreen(navController)
-                        2 -> SettingsScreen(navController)
+                        AppRoutes.HOME -> HomeScreen(navController)
+                        AppRoutes.SEARCH -> SearchScreen(navController)
+                        AppRoutes.SETTINGS -> SettingsScreen(navController)
                     }
                 }
                 composable(
