@@ -29,23 +29,15 @@ fun HomeScreen(
     navController: NavController,
     snackbarManagerViewModel: SnackbarManagerViewModel = hiltViewModel<SnackbarManagerViewModel>()
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        CenterAlignedTopAppBar(
-            title = { Text(stringResource(id = R.string.home)) },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-            ),
-        )
-        LazyColumn(modifier = Modifier.fillMaxSize().weight(1f)) {
-            items(100) { index ->
-                TaskItem(
-                    index = index,
-                    onTaskCompleted = {
-                        snackbarManagerViewModel.showSnackbar("任务完成")
-                    }
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-            }
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        items(100) { index ->
+            TaskItem(
+                index = index,
+                onTaskCompleted = {
+                    snackbarManagerViewModel.showSnackbar("任务完成")
+                }
+            )
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -53,88 +54,72 @@ fun SettingsScreen(
     }
 
     var text by remember { mutableStateOf("") }
-
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(id = R.string.settings)) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    titleContentColor = Color.Black,
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                ),
-            )
-        },
-        content = { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp)
-                    .padding(innerPadding)
-            ) {
-                Button(onClick = {
-                    if (permissionNotificationState.status.isGranted) {
-                        settingViewModel.senNotification();
-                    } else {
-                        permissionNotificationState.launchPermissionRequest()
-                    }
-                }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(R.string.notification))
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(R.string.location))
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(R.string.callLog))
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {
-                }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(R.string.phone_number))
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {
-                    settingViewModel.setStringValue("chen", "cheng")
-                }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(R.string.set_string_value))
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {
-                    text = settingViewModel.getStringValue("chen")
-                }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(R.string.get_string_value) + ": $text")
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {
-                    settingViewModel.removeKey("chen")
-                }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(R.string.delete_preference_key))
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {
-                    settingViewModel.openSettings()
-                }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(R.string.open_settings))
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {
-                    navController.navigate(AppRoutes.SETTINGS_DETAIL)
-                }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(R.string.nav_to_detail))
-                }
-
-
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {
-                    navController.navigate(AppRoutes.CAMERA)
-                }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = "相机页面")
-                }
-
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 10.dp)
+    ) {
+        Button(onClick = {
+            if (permissionNotificationState.status.isGranted) {
+                settingViewModel.senNotification();
+            } else {
+                permissionNotificationState.launchPermissionRequest()
             }
-
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.notification))
         }
-    )
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.location))
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.callLog))
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.phone_number))
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {
+            settingViewModel.setStringValue("chen", "cheng")
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.set_string_value))
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {
+            text = settingViewModel.getStringValue("chen")
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.get_string_value) + ": $text")
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {
+            settingViewModel.removeKey("chen")
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.delete_preference_key))
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {
+            settingViewModel.openSettings()
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.open_settings))
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {
+            navController.navigate(AppRoutes.SETTINGS_DETAIL)
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.nav_to_detail))
+        }
+
+
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {
+            navController.navigate(AppRoutes.CAMERA)
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = "相机页面")
+        }
+
+    }
 }
