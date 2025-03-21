@@ -1,4 +1,4 @@
-package site.chenc.study_compose.layout
+package site.chenc.study_compose.root
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home

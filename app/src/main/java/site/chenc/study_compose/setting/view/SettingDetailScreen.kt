@@ -2,8 +2,6 @@ package site.chenc.study_compose.setting.view
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,28 +28,34 @@ import site.chenc.study_compose.R
 fun SettingsDetailScreen(
     navController: NavController,
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        CenterAlignedTopAppBar(
-            title = { Text(stringResource(id = R.string.detail_title)) },
-            colors = TopAppBarDefaults.topAppBarColors(
-                titleContentColor = Color.Black,
-            ),
-            navigationIcon = {
-                IconButton(onClick = {
-                    navController.popBackStack()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.Black
-                    )
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text(stringResource(id = R.string.detail_title)) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    titleContentColor = Color.Black,
+                ),
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.Black
+                        )
+                    }
                 }
-            }
-        )
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
-        ) { items(100) { Text(text = "Item $it")} }
-    }
+            )
+        },
+        content = { paddingValues ->
+            LazyColumn(
+                modifier = Modifier
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                    )
+                    .fillMaxSize()
+            ) { items(100) { Text(text = "Item $it") } }
+        })
 }

@@ -30,7 +30,7 @@ fun HomeScreen(
     snackbarManagerViewModel: SnackbarManagerViewModel = hiltViewModel<SnackbarManagerViewModel>()
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(100) { index ->
+        items(10) { index ->
             TaskItem(
                 index = index,
                 onTaskCompleted = {

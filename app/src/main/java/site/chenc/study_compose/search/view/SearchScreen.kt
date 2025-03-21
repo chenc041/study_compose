@@ -1,6 +1,7 @@
 package site.chenc.study_compose.search.view
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,33 +34,19 @@ fun SearchScreen(navController: NavController ,viewModel: SearchViewModel = hilt
     LaunchedEffect(name) {
         viewModel.fetchUser(name)
     }
-
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(id = R.string.search)) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                ),
-            )
-        },
-        content = { innerPadding ->
-            // 根据状态显示 UI
-            Column(modifier = Modifier.padding(innerPadding)) {
-                when(val user = userState) {
-                    is UiState.Success -> {
-                        Text(text = "ID: ${user.data.id}")
-                        Text(text = "Name: ${user.data.name}")
-                        Text(text = "Email: ${user.data.login}")
-                    }
-                    is UiState.Error -> {
-                        Text(text = "Error: ${user.message}")
-                    }
-                    else -> {
-                        Text(text = "Loading...")
-                    }
-                }
+    Column(modifier = Modifier.fillMaxSize()) {
+        when(val user = userState) {
+            is UiState.Success -> {
+                Text(text = "ID: ${user.data.id}")
+                Text(text = "Name: ${user.data.name}")
+                Text(text = "Email: ${user.data.login}")
+            }
+            is UiState.Error -> {
+                Text(text = "Error: ${user.message}")
+            }
+            else -> {
+                Text(text = "Loading...")
             }
         }
-    )
+    }
 }
