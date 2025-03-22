@@ -43,7 +43,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Study_compose">
+            android:theme="@style/Theme.Study_compose.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

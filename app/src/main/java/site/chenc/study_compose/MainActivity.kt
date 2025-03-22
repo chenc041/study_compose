@@ -6,9 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,9 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import site.chenc.study_compose.root.RootScreen
 import site.chenc.study_compose.setting.view.QRCodeScannerScreen
 import site.chenc.study_compose.setting.view.SettingsDetailScreen
-import site.chenc.study_compose.splash.view.SplashScreen
 import site.chenc.study_compose.ui.theme.Study_composeTheme
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -44,39 +39,30 @@ fun BaseScreen() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppRoutes.SPLASH,
+        startDestination = AppRoutes.ROOT,
         modifier = Modifier
             .fillMaxSize(),
         enterTransition = {
             slideIntoContainer(
                 towards = SlideDirection.Left,
-                animationSpec = tween(360, easing = LinearOutSlowInEasing)
             )
         },
         exitTransition = {
             slideOutOfContainer(
                 towards = SlideDirection.Left,
-                animationSpec = tween(360, easing = FastOutLinearInEasing)
             )
         },
         popEnterTransition = {
             slideIntoContainer(
                 towards = SlideDirection.Right,
-                animationSpec = tween(360, easing = LinearOutSlowInEasing)
             )
         },
         popExitTransition = {
             slideOutOfContainer(
                 towards = SlideDirection.Right,
-                animationSpec = tween(360, easing = FastOutLinearInEasing)
             )
         }
     ) {
-        composable(
-            route = AppRoutes.SPLASH
-        ) {
-            SplashScreen(navController)
-        }
         composable(
             route = AppRoutes.ROOT
         ) {

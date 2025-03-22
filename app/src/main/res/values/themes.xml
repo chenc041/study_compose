@@ -7,4 +7,14 @@
         <!-- 设置状态栏文字和图标为深色（适用于浅色背景） -->
         <item name="android:windowLightStatusBar">true</item>
     </style>
+    <!-- 默认主题继承 SplashScreen 主题 -->
+    <style name="Theme.Study_compose.Starting" parent="Theme.Study_compose">
+        <!-- 设置启动图标 -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <!-- 动画持续时间（毫秒） -->
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <!-- 是否在显示完成后保持图标动画 -->
+        <item name="postSplashScreenTheme">@style/Theme.Study_compose</item>
+    </style>
+
 </resources>

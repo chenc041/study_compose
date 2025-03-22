@@ -146,6 +146,7 @@ dependencies {
     implementation(libs.androidx.camera.view)
 
     implementation(libs.barcode.scanning)
+    implementation(libs.androidx.core.splashscreen)
 
     kapt(libs.hilt.compiler)
 
