@@ -1,9 +1,57 @@
 package site.chenc.study_compose.utils
 
+import android.content.ContentValues
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.io.IOException
+import javax.inject.Inject
 
-class FileStorageUtils constructor(
-    @ApplicationContext private val context: Context
+class FileStorageUtils @Inject constructor(
+    @ApplicationContext private val context: Context,
 ) {
+    /**
+     * 将 Bitmap 保存到系统相册
+     */
+    fun saveBitmapToGallery(bitmap: Bitmap) {
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, "detected_${System.currentTimeMillis()}.jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            // Android 10+ 指定保存路径
+            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+            put(MediaStore.Images.Media.IS_PENDING, 1)
+        }
+
+        val resolver = context.contentResolver
+        var uri: Uri? = null
+        try {
+            uri = resolver.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                contentValues
+            ) ?: run {
+                Log.e("saveBitmapToGallery", "Failed to create MediaStore entry")
+                return
+            }
+            resolver.openOutputStream(uri)?.use { os ->
+                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 90, os)) {
+                    throw IOException("Failed to compress bitmap")
+                }
+            }
+            // Android 10+ 需要更新 IS_PENDING
+            contentValues.clear()
+            contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
+            resolver.update(uri, contentValues, null, null)
+
+            // 通知系统刷新相册
+            resolver.notifyChange(uri, null)
+            Log.d("saveBitmapToGallery", "Image saved to gallery: $uri")
+        } catch (e: Exception) {
+            Log.e("saveBitmapToGallery", "Error saving image: ${e.message}")
+            uri?.let { resolver.delete(it, null, null) }
+        }
+    }
 }

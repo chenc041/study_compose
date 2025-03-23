@@ -147,6 +147,8 @@ dependencies {
 
     implementation(libs.barcode.scanning)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.object1.detection)
+    implementation(libs.text.recognition)
 
     kapt(libs.hilt.compiler)
 

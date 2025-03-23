@@ -42,8 +42,11 @@ fun SettingsScreen(
     val permissionNotificationState = rememberPermissionState(
         permission = Manifest.permission.POST_NOTIFICATIONS
     )
-    rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) {
+    val image = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { it ->
         Log.d("TAG", "onActivityResult: $it")
+        if(it != null) {
+            settingViewModel.detectionObject(it)
+        }
     }
     var text by remember { mutableStateOf("") }
     Column(
@@ -70,6 +73,7 @@ fun SettingsScreen(
         }
         Spacer(modifier = Modifier.height(10.dp))
         Button(onClick = {
+            image.launch("image/*")
         }, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.phone_number))
         }
