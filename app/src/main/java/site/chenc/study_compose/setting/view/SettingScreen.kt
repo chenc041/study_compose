@@ -44,9 +44,6 @@ fun SettingsScreen(
     )
     val image = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { it ->
         Log.d("TAG", "onActivityResult: $it")
-        if(it != null) {
-            settingViewModel.detectionObject(it)
-        }
     }
     var text by remember { mutableStateOf("") }
     Column(

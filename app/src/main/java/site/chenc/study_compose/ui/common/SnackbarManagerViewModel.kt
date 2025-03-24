@@ -1,33 +1,24 @@
 package site.chenc.study_compose.ui.common
 
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHostState
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import site.chenc.study_compose.models.SnackbarMessage
 import javax.inject.Inject
 
 @HiltViewModel
-class SnackbarManagerViewModel @Inject constructor(
-    private val snackbarHostState: SnackbarHostState
-) : ViewModel() {
+class SnackbarManagerViewModel @Inject constructor(): ViewModel() {
+    private val _snackbarMessages = MutableSharedFlow<SnackbarMessage>()
+    val snackbarMessage: SharedFlow<SnackbarMessage> = _snackbarMessages.asSharedFlow()
 
-    val hostState: SnackbarHostState get() = snackbarHostState
-
-    fun showSnackbar(
-        message: String,
-        actionLabel: String? = null,
-        duration: SnackbarDuration = SnackbarDuration.Short,
-        withDismissAction: Boolean = false
-    ) {
+    fun showSnackbar(message: SnackbarMessage) {
         viewModelScope.launch {
-            snackbarHostState.showSnackbar(
-                message = message,
-                actionLabel = actionLabel,
-                duration = duration,
-                withDismissAction = withDismissAction
-            )
+            _snackbarMessages.emit(message)
         }
     }
 }

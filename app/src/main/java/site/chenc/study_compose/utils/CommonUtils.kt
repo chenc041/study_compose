@@ -4,28 +4,29 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.Rect
 import android.net.Uri
 import android.provider.Settings
 import android.util.Log
-import androidx.annotation.OptIn
-import androidx.camera.core.ExperimentalGetImage
 import androidx.core.net.toUri
+import androidx.exifinterface.media.ExifInterface
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.objects.DetectedObject
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
-import dagger.hilt.android.qualifiers.ApplicationContext
-import jakarta.inject.Inject
-import site.chenc.study_compose.models.OperationResult
-import java.io.IOException
-import androidx.exifinterface.media.ExifInterface
-import android.graphics.*
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import dagger.hilt.android.qualifiers.ApplicationContext
+import jakarta.inject.Inject
+import kotlinx.coroutines.suspendCancellableCoroutine
+import site.chenc.study_compose.models.OperationResult
+import java.io.IOException
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 class CommonUtils @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -49,45 +50,60 @@ class CommonUtils @Inject constructor(
 
     /**
      * 对象检测
+     * @param uri 图片的 Uri
+     * @return 检测结果列表
      */
-    @OptIn(ExperimentalGetImage::class)
-    fun objectDetection(uri: Uri) {
-        val options = ObjectDetectorOptions.Builder()
-            .setDetectorMode(ObjectDetectorOptions.SINGLE_IMAGE_MODE)
-            .enableClassification()
-            .build()
-        val objectDetector = ObjectDetection.getClient(options)
-        val image = InputImage.fromFilePath(context, uri)
-        objectDetector.process(image)
-            .addOnSuccessListener { detectionResults ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    drawBoundingBoxAndSave(uri, detectionResults)
-                }
+    suspend fun objectDetection(uri: Uri): List<DetectedObject> {
+        return suspendCancellableCoroutine { continuation ->
+            try {
+                val options = ObjectDetectorOptions.Builder()
+                    .setDetectorMode(ObjectDetectorOptions.SINGLE_IMAGE_MODE)
+                    .enableClassification()
+                    .build()
+                val objectDetector = ObjectDetection.getClient(options)
+                val image = InputImage.fromFilePath(context, uri)
+                objectDetector.process(image)
+                    .addOnSuccessListener { detectionResults ->
+                        continuation.resume(detectionResults)
+                    }
+                    .addOnFailureListener { e ->
+                        continuation.resumeWithException(e)
+                    }
+                    .addOnCompleteListener {
+                        objectDetector.close()
+                    }
+            } catch (e: IOException) {
+                continuation.resumeWithException(e)
             }
-            .addOnFailureListener { e ->
-                objectDetector.close()
-            }
-            .addOnCompleteListener {
-                objectDetector.close()
-            }
+        }
     }
 
-    fun textRecognition(uri: Uri) {
-        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-        val image = InputImage.fromFilePath(context, uri)
-        recognizer.process(image)
-            .addOnSuccessListener { visionText ->
-                // Task completed successfully
-                // ...
+    /**
+     * 文字识别
+     * @param uri 图片的 Uri
+     * @return 识别结果
+     */
+    suspend fun textRecognition(uri: Uri): String {
+        return suspendCancellableCoroutine { continuation ->
+            try {
+                val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+                val image = InputImage.fromFilePath(context, uri)
+                recognizer.process(image)
+                    .addOnSuccessListener { visionText ->
+                        continuation.resume(visionText.text)
+                    }
+                    .addOnFailureListener { e ->
+                        continuation.resumeWithException(e)
+                    }
+                    .addOnCompleteListener {
+                        recognizer.close()
+                    }
+            } catch (e: IOException) {
+                continuation.resumeWithException(e)
             }
-            .addOnFailureListener { e ->
-                // Task failed with an exception
-                // ...
-            }
-            .addOnCompleteListener {
-                recognizer.close()
-            }
+        }
     }
+
     /**
      * 在图片上绘制检测框并保存到相册
      * @param uri 原始图片的 Uri
@@ -113,7 +129,7 @@ class CommonUtils @Inject constructor(
         // 3. 绘制所有检测框
         detectionResults.forEach { obj ->
             val boundingBox = obj.boundingBox
-            val croppedBitmap =  cropBitmapWithBoundingBox(mutableBitmap, boundingBox)
+            val croppedBitmap = cropBitmapWithBoundingBox(mutableBitmap, boundingBox)
             croppedBitmap?.let {
                 fileStorageUtils.saveBitmapToGallery(it)
                 it.recycle()
@@ -196,6 +212,4 @@ class CommonUtils @Inject constructor(
             null
         }
     }
-
-
 }

@@ -1,9 +1,6 @@
 package site.chenc.study_compose.setting.viewmodel
 
 import android.content.Context
-import android.net.Uri
-import androidx.camera.core.ImageProxy
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -43,9 +40,5 @@ class SettingViewModel @Inject constructor(
 
     fun openSettings() {
         commonUtils.openAppSettings()
-    }
-
-    fun detectionObject(uri: Uri) {
-        commonUtils.objectDetection(uri)
     }
 }
