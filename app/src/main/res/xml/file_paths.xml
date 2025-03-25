@@ -1,0 +1,20 @@
+<!-- res/xml/file_paths.xml -->
+<paths>
+    <!-- 对应 Context.getFilesDir() -->
+    <files-path name="internal_files" path="." />
+
+    <!-- 对应 Context.getCacheDir() -->
+    <cache-path name="internal_cache" path="." />
+
+    <!-- 对应 Environment.getExternalStorageDirectory() -->
+    <external-path name="external_storage" path="." />
+
+    <!-- 对应 Context.getExternalFilesDir(null) -->
+    <external-files-path name="external_app_files" path="." />
+
+    <!-- 对应 Context.getExternalCacheDir() -->
+    <external-cache-path name="external_app_cache" path="." />
+
+    <!-- 对应 Context.getExternalMediaDirs() -->
+    <external-media-path name="external_media" path="." />
+</paths>

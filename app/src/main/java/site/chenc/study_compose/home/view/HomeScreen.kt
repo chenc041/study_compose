@@ -12,21 +12,21 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import site.chenc.study_compose.home.view.components.TaskItem
+import site.chenc.study_compose.home.viewmodel.HomeViewModel
 import site.chenc.study_compose.models.SnackbarMessage
-import site.chenc.study_compose.ui.common.SnackbarManagerViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
-    snackbarManagerViewModel: SnackbarManagerViewModel = hiltViewModel<SnackbarManagerViewModel>()
+    homeViewModel: HomeViewModel = hiltViewModel<HomeViewModel>()
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(10) { index ->
             TaskItem(
                 index = index,
                 onTaskCompleted = {
-                    snackbarManagerViewModel.showSnackbar(
+                    homeViewModel.showSnackBar(
                         SnackbarMessage(
                             message = "这是一个Snackbar",
                             actionLabel = "确认",

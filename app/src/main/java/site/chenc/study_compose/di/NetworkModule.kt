@@ -9,7 +9,6 @@ import retrofit2.Retrofit
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
 import site.chenc.study_compose.BuildConfig
-import site.chenc.study_compose.search.respository.UserRepository
 import site.chenc.study_compose.search.service.ApiService
 import javax.inject.Singleton
 

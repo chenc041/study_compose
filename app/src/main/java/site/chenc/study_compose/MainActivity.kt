@@ -1,7 +1,6 @@
 package site.chenc.study_compose
 
 import android.os.Build
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +17,7 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -29,11 +29,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import site.chenc.study_compose.root.RootScreen
 import site.chenc.study_compose.setting.view.QRCodeScannerScreen
 import site.chenc.study_compose.setting.view.SettingsDetailScreen
-import site.chenc.study_compose.ui.common.SnackbarManagerViewModel
+import site.chenc.study_compose.ui.common.GlobalViewModel
 import site.chenc.study_compose.ui.theme.Study_composeTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,36 +108,44 @@ fun BaseScreen() {
  */
 @Composable
 fun CustomSnackbarHost(
-    snackbarManagerViewModel: SnackbarManagerViewModel = hiltViewModel<SnackbarManagerViewModel>()
+    globalViewModel: GlobalViewModel = hiltViewModel<GlobalViewModel>()
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
-        snackbarManagerViewModel.snackbarMessage.collect {
-            val result = snackbarHostState.showSnackbar(
-                message = it.message,
-                actionLabel = it.actionLabel,
-                withDismissAction = it.withDismissAction,
-            )
-            Log.d("2222", result.toString())
-            when(result) {
-                SnackbarResult.ActionPerformed -> {
-                    it.onAction?.invoke()
-                }
-                SnackbarResult.Dismissed -> {
-                    it.onDismiss?.invoke()
+        globalViewModel.let { it ->
+            it.snackbarMessage.collect {
+                val result = snackbarHostState.showSnackbar(
+                    message = it.message,
+                    actionLabel = it.actionLabel,
+                    withDismissAction = it.withDismissAction,
+                )
+                when (result) {
+                    SnackbarResult.ActionPerformed -> {
+                        it.onAction?.invoke()
+                    }
+
+                    SnackbarResult.Dismissed -> {
+                        it.onDismiss?.invoke()
+                    }
                 }
             }
         }
     }
 
-    Box(modifier = Modifier.padding(top = 30.dp).fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .padding(bottom = 100.dp)
+            .fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
+    ) {
         SnackbarHost(
             hostState = snackbarHostState,
         ) { snackbarData ->
             Snackbar(
                 snackbarData = snackbarData,
                 contentColor = Color.Black,
-                containerColor = MaterialTheme.colorScheme.primaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                actionColor = MaterialTheme.colorScheme.primary
             )
         }
     }
