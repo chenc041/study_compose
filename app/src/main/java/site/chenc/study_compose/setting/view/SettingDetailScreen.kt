@@ -4,7 +4,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -15,10 +14,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import site.chenc.study_compose.R
 
@@ -28,6 +32,9 @@ import site.chenc.study_compose.R
 fun SettingsDetailScreen(
     navController: NavController,
 ) {
+    val composition by rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.animation)
+    )
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -50,12 +57,10 @@ fun SettingsDetailScreen(
             )
         },
         content = { paddingValues ->
-            LazyColumn(
-                modifier = Modifier
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                    )
-                    .fillMaxSize()
-            ) { items(100) { Text(text = "Item $it") } }
+            LottieAnimation(
+                composition,
+                iterations = LottieConstants.IterateForever,
+                modifier = Modifier.padding(paddingValues).fillMaxSize()
+            )
         })
 }
