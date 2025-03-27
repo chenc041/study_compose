@@ -1,5 +1,5 @@
 [versions]
-accompanistPermissions = "0.37.0"
+accompanistPermissions = "0.37.2"
 agp = "8.9.1"
 barcodeScanning = "17.3.0"
 cameraCore = "1.4.1"
