@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android") version "2.52"
-    id("io.sentry.android.gradle") version "4.14.1"
+    id("io.sentry.android.gradle") version "5.3.0"
 }
 
 
