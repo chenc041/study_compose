@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android") version "2.52"
+    id("com.google.dagger.hilt.android") version "2.56.1"
     id("io.sentry.android.gradle") version "5.3.0"
 }
 
