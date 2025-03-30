@@ -145,7 +145,8 @@ fun CustomSnackbarHost(
                 snackbarData = snackbarData,
                 contentColor = Color.Black,
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
-                actionColor = MaterialTheme.colorScheme.primary
+                actionColor = MaterialTheme.colorScheme.primary,
+                dismissActionContentColor = MaterialTheme.colorScheme.primary
             )
         }
     }
