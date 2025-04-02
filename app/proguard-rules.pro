@@ -49,3 +49,6 @@
 -keep interface androidx.hilt.** { *; }
 
 # 如果你有其他库也使用 Dagger/Hilt，确保添加对应的规则来保护这些库的类。
+
+# 防止使用了 coil 打包报错
+-dontwarn coil3.PlatformContext
