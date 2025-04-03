@@ -7,9 +7,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("kotlin-kapt")
     id("com.google.dagger.hilt.android") version "2.56.1"
     id("io.sentry.android.gradle") version "5.3.0"
+    id("com.google.devtools.ksp")
 }
 
 
@@ -34,7 +34,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters.addAll(listOf("arm64-v8a", "x86_64"))
+            abiFilters.addAll(listOf("arm64-v8a"))
         }
     }
 
@@ -147,10 +147,11 @@ dependencies {
 
     implementation(libs.barcode.scanning)
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.object1.detection)
-    implementation(libs.text.recognition)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
 
-    kapt(libs.hilt.compiler)
+    ksp(libs.androidx.room.compiler)
+    ksp(libs.hilt.compiler)
 
 
     testImplementation(libs.junit)
@@ -160,8 +161,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-}
-
-kapt {
-    correctErrorTypes = true
 }

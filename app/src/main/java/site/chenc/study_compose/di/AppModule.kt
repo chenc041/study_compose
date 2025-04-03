@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import site.chenc.study_compose.utils.CommonUtils
 import site.chenc.study_compose.utils.NotificationUtils
 import site.chenc.study_compose.utils.SnackbarManagerUtils
 import javax.inject.Singleton
@@ -25,4 +26,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideSnackbarManagerUtils(): SnackbarManagerUtils = SnackbarManagerUtils()
+
+    @Provides
+    @Singleton
+    fun provideCommonUtils(@ApplicationContext context: Context): CommonUtils = CommonUtils(context)
 }

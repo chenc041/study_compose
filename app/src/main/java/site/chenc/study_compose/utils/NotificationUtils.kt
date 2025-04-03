@@ -24,7 +24,7 @@ class NotificationUtils @Inject constructor(
         val manager = context.getSystemService(NotificationManager::class.java)
         if (manager.getNotificationChannel(defaultChannelId) == null) {
             val defaultChannelName = context.resources.getString(R.string.default_channel_name)
-            var defaultDescription = context.resources.getString(R.string.default_channel_description)
+            val defaultDescription = context.resources.getString(R.string.default_channel_description)
             val channel = NotificationChannel(
                 defaultChannelId,
                 defaultChannelName,
@@ -66,5 +66,5 @@ class NotificationUtils @Inject constructor(
         }
     }
     private val notificationId = AtomicInteger(0)
-    fun getUniqueId(): Int = notificationId.getAndIncrement()
+    private fun getUniqueId(): Int = notificationId.getAndIncrement()
 }

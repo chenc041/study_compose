@@ -30,7 +30,7 @@ class SharedPreferencesUtils @Inject constructor(
         editor.apply() // 或者使用 editor.commit() 如果需要同步操作
     }
 
-    fun getIntValue(key: String): Int? {
+    fun getIntValue(key: String): Int {
         return sharedPreferences.getInt(key, 0)
     }
 
