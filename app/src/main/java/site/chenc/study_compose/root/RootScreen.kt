@@ -33,7 +33,7 @@ import site.chenc.study_compose.setting.view.SettingsScreen
 @Composable
 fun RootScreen(navController: NavController) {
     var selectedRoute by rememberSaveable { mutableStateOf(AppRoutes.HOME) }
-    val routeMap = mapOf<Int, String>(
+    val routeMap = mapOf(
         0 to AppRoutes.HOME,
         1 to AppRoutes.SEARCH,
         2 to AppRoutes.SETTINGS,

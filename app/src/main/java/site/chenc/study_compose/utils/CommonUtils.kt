@@ -39,7 +39,7 @@ class CommonUtils @Inject constructor(
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             context.startActivity(intent)
-            OperationResult.Success
+            OperationResult.Success()
         } catch (e: Exception) {
             OperationResult.Error(e)
         }

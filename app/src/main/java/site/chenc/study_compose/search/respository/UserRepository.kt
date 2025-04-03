@@ -12,7 +12,7 @@ class UserRepository @Inject constructor(
     private val apiService: ApiService
 ) {
      fun getUser(name: String): Flow<UserModel> = flow {
-        var response = apiService.getUser(name)
+        val response = apiService.getUser(name)
          emit(response)
     }
 }

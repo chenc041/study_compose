@@ -50,7 +50,7 @@ class FileStorageUtils @Inject constructor(
             // 通知系统刷新相册
             resolver.notifyChange(uri, null)
             Log.d("saveBitmapToGallery", "Image saved to gallery: $uri")
-            OperationResult.Success
+            OperationResult.Success()
         } catch (e: Exception) {
             Log.e("saveBitmapToGallery", "Error saving image: ${e.message}")
             uri?.let { resolver.delete(it, null, null) }
