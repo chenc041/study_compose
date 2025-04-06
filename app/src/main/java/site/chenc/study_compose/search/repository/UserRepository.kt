@@ -1,4 +1,4 @@
-package site.chenc.study_compose.search.respository
+package site.chenc.study_compose.search.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

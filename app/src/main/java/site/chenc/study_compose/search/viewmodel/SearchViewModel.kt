@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import okio.IOException
 import retrofit2.HttpException
 import site.chenc.study_compose.models.UiState
-import site.chenc.study_compose.search.respository.UserRepository
+import site.chenc.study_compose.search.repository.UserRepository
 import site.chenc.study_compose.search.models.UserModel
 import javax.inject.Inject
 
