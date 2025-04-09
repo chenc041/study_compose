@@ -3,16 +3,14 @@
   "extends": ["config:recommended"],
   "automerge": true,
   "automergeType": "pr",
+  "platformAutomerge": true,
+  "requiredStatusChecks": null,
+  "dependencyDashboard": true,
   "packageRules": [
     {
-      "matchUpdateTypes": ["*"],
-      "automerge": true
-    },
-    {
-      "matchDepTypes": ["devDependencies", "dependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     }
   ],
-  "minimumReleaseAge": null,
-  "prCreation": "not-pending"
+  "automergeStrategy": "squash"
 }
