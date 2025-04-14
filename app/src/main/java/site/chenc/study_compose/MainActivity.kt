@@ -29,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import site.chenc.study_compose.root.RootScreen
 import site.chenc.study_compose.setting.view.QRCodeScannerScreen
 import site.chenc.study_compose.setting.view.SettingsDetailScreen
+import site.chenc.study_compose.setting.view.WebViewScreen
 import site.chenc.study_compose.ui.common.GlobalViewModel
 import site.chenc.study_compose.ui.theme.Study_composeTheme
 
@@ -97,6 +98,11 @@ fun BaseScreen() {
             route = AppRoutes.CAMERA
         ) {
             QRCodeScannerScreen(navController)
+        }
+        composable(
+            route = AppRoutes.WEBVIEW
+        ) {
+            WebViewScreen()
         }
     }
     CustomSnackbarHost()

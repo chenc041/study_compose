@@ -1,13 +1,16 @@
 package site.chenc.study_compose.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import site.chenc.study_compose.interceptors.AuthInterceptor
 import site.chenc.study_compose.utils.CommonUtils
 import site.chenc.study_compose.utils.NotificationUtils
+import site.chenc.study_compose.utils.SharedPreferencesUtils
 import site.chenc.study_compose.utils.SnackbarManagerUtils
 import javax.inject.Singleton
 
@@ -30,4 +33,12 @@ object AppModule {
     @Provides
     @Singleton
     fun provideCommonUtils(@ApplicationContext context: Context): CommonUtils = CommonUtils(context)
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferencesUtils(@ApplicationContext context: Context): SharedPreferencesUtils = SharedPreferencesUtils(context)
+
+    @Provides
+    @Singleton
+    fun provideAuthInterceptor(@ApplicationContext context: Context): AuthInterceptor = AuthInterceptor(context)
 }

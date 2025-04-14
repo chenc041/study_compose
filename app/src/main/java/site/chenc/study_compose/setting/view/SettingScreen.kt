@@ -64,7 +64,9 @@ fun SettingsScreen(
             Text(text = stringResource(R.string.location))
         }
         Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+        Button(onClick = {
+            navController.navigate(AppRoutes.WEBVIEW)
+        }, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.callLog))
         }
         Spacer(modifier = Modifier.height(10.dp))
