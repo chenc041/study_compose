@@ -40,5 +40,5 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(@ApplicationContext context: Context): AuthInterceptor = AuthInterceptor(context)
+    fun provideAuthInterceptor(sharedPreferencesUtils: SharedPreferencesUtils): AuthInterceptor = AuthInterceptor(sharedPreferencesUtils)
 }
