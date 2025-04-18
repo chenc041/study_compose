@@ -20,9 +20,9 @@ class FileStorageUtils @Inject constructor(
     /**
      * 将 Bitmap 保存到系统相册
      */
-    suspend fun saveBitmapToGallery(bitmap: Bitmap): OperationResult = withContext(Dispatchers.IO) {
+    suspend fun saveBitmapToGallery(bitmap: Bitmap, fileName: String = "${System.currentTimeMillis()}.jpg"): OperationResult<Uri?> = withContext(Dispatchers.IO) {
         val contentValues = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, "detected_${System.currentTimeMillis()}.jpg")
+            put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
             put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
             put(MediaStore.Images.Media.IS_PENDING, 1)
@@ -50,7 +50,7 @@ class FileStorageUtils @Inject constructor(
             // 通知系统刷新相册
             resolver.notifyChange(uri, null)
             Log.d("saveBitmapToGallery", "Image saved to gallery: $uri")
-            OperationResult.Success()
+            OperationResult.Success<Uri?>(uri)
         } catch (e: Exception) {
             Log.e("saveBitmapToGallery", "Error saving image: ${e.message}")
             uri?.let { resolver.delete(it, null, null) }

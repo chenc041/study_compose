@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
+import site.chenc.study_compose.AppConfig
 import site.chenc.study_compose.R
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
@@ -20,13 +21,12 @@ class NotificationUtils @Inject constructor(
 ) {
 
     fun createNotificationChannel() {
-        val defaultChannelId = context.resources.getString(R.string.default_channel_id)
         val manager = context.getSystemService(NotificationManager::class.java)
-        if (manager.getNotificationChannel(defaultChannelId) == null) {
+        if (manager.getNotificationChannel(AppConfig.DEFAULT_CHANNEL_ID) == null) {
             val defaultChannelName = context.resources.getString(R.string.default_channel_name)
             val defaultDescription = context.resources.getString(R.string.default_channel_description)
             val channel = NotificationChannel(
-                defaultChannelId,
+                AppConfig.DEFAULT_CHANNEL_ID,
                 defaultChannelName,
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
@@ -36,7 +36,9 @@ class NotificationUtils @Inject constructor(
         }
     }
 
-    // 发送通知
+    /**
+     * 发送消息通知
+     */
     fun sendDefaultNotification(
         title: String,
         content: String,
@@ -44,8 +46,7 @@ class NotificationUtils @Inject constructor(
         pendingIntent: PendingIntent? = null,
     ) {
         // 构建通知
-        val defaultChannelId = context.resources.getString(R.string.default_channel_id)
-        val builder = NotificationCompat.Builder(context, defaultChannelId)
+        val builder = NotificationCompat.Builder(context, AppConfig.DEFAULT_CHANNEL_ID)
             .setSmallIcon(iconRes)
             .setContentTitle(title)
             .setContentText(content)
@@ -54,7 +55,6 @@ class NotificationUtils @Inject constructor(
 
         pendingIntent?.let { builder.setContentIntent(it) }
 
-        // 发送通知
         if (ContextCompat.checkSelfPermission(
                 context,
                 Manifest.permission.POST_NOTIFICATIONS
@@ -66,5 +66,9 @@ class NotificationUtils @Inject constructor(
         }
     }
     private val notificationId = AtomicInteger(0)
+
+    /**
+     * 获取唯一的id
+     */
     private fun getUniqueId(): Int = notificationId.getAndIncrement()
 }

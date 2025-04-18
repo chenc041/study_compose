@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import androidx.annotation.Nullable
 import androidx.core.net.toUri
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -32,14 +33,14 @@ class CommonUtils @Inject constructor(
     /**
      * 打开应用设置页面
      */
-    fun openAppSettings(): OperationResult {
+    fun openAppSettings(): OperationResult<Nullable> {
         return try {
             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                 data = "package:${context.packageName}".toUri()
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             context.startActivity(intent)
-            OperationResult.Success()
+            OperationResult.Success(null)
         } catch (e: Exception) {
             OperationResult.Error(e)
         }

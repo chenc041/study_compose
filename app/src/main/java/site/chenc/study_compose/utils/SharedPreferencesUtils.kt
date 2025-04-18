@@ -2,15 +2,15 @@ package site.chenc.study_compose.utils
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import site.chenc.study_compose.AppConfig
 import site.chenc.study_compose.R
 import javax.inject.Inject
 
 class SharedPreferencesUtils @Inject constructor(
    @ApplicationContext private val context: Context
 ) {
-    private  val sharedPreferencesTag = context.resources.getString(R.string.shared_preferences_tag)
     private val sharedPreferences =
-        context.getSharedPreferences(sharedPreferencesTag, Context.MODE_PRIVATE)
+        context.getSharedPreferences(AppConfig.DEFAULT_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
     private val editor = sharedPreferences.edit()
 
     /**

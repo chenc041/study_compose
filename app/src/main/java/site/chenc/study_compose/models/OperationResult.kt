@@ -1,6 +1,6 @@
 package site.chenc.study_compose.models
 
-sealed class OperationResult {
-    data class Success(val data: Any? = null) : OperationResult()
-    data class Error(val exception: Exception) : OperationResult()
+sealed class OperationResult<out T> {
+    data class Success<T>(val data: T? = null) : OperationResult<T>()
+    data class Error(val exception: Throwable) : OperationResult<Nothing>()
 }
