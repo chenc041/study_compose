@@ -5,9 +5,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import site.chenc.study_compose.models.SnackbarMessage
-import javax.inject.Inject
 
-class SnackbarManagerUtils @Inject constructor() {
+/**
+ * snackbar管理类
+ */
+class SnackbarManagerUtils {
     private val _snackbarMessages = MutableSharedFlow<SnackbarMessage>(
         extraBufferCapacity = 64,
         onBufferOverflow = BufferOverflow.DROP_OLDEST

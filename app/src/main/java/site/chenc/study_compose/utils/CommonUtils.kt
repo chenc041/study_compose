@@ -10,18 +10,18 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import dagger.hilt.android.qualifiers.ApplicationContext
-import jakarta.inject.Inject
 import kotlinx.coroutines.suspendCancellableCoroutine
 import site.chenc.study_compose.models.OperationResult
 import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class CommonUtils @Inject constructor(
-    @ApplicationContext private val context: Context,
+/**
+ * 通用工具类
+ */
+class CommonUtils(
+    private val context: Context,
 ) {
-
     private val barcodeScanner by lazy {
         BarcodeScanning.getClient(
             BarcodeScannerOptions.Builder().setBarcodeFormats(

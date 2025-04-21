@@ -1,16 +1,19 @@
 package site.chenc.study_compose.utils
 
 import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
 import site.chenc.study_compose.AppConfig
-import site.chenc.study_compose.R
-import javax.inject.Inject
 
-class SharedPreferencesUtils @Inject constructor(
-   @ApplicationContext private val context: Context
+/**
+ * 本地轻度数据存储
+ */
+class SharedPreferencesUtils(
+    context: Context
 ) {
     private val sharedPreferences =
-        context.getSharedPreferences(AppConfig.DEFAULT_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        context.getSharedPreferences(
+            AppConfig.DEFAULT_SHARED_PREFERENCES_NAME,
+            Context.MODE_PRIVATE
+        )
     private val editor = sharedPreferences.edit()
 
     /**
@@ -18,16 +21,16 @@ class SharedPreferencesUtils @Inject constructor(
      */
     fun saveStringValue(key: String, value: String) {
         editor.putString(key, value)
-        editor.apply() // 或者使用 editor.commit() 如果需要同步操作
+        editor.apply()
     }
 
     fun getStringValue(key: String): String? {
         return sharedPreferences.getString(key, null)
     }
 
-    fun sableIntValue(key: String, value: Int) {
+    fun saveIntValue(key: String, value: Int) {
         editor.putInt(key, value)
-        editor.apply() // 或者使用 editor.commit() 如果需要同步操作
+        editor.apply()
     }
 
     fun getIntValue(key: String): Int {

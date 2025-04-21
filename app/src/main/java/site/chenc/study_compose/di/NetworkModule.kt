@@ -5,11 +5,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import site.chenc.study_compose.AppConfig
 import site.chenc.study_compose.BuildConfig
+import site.chenc.study_compose.interceptors.AuthInterceptor
 import site.chenc.study_compose.search.service.ApiService
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -18,12 +21,15 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(authInterceptor)
+            .connectTimeout(AppConfig.CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(AppConfig.READ_TIMEOUT, TimeUnit.SECONDS)
             .build()
     }
 

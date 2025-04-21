@@ -16,7 +16,11 @@ import site.chenc.study_compose.R
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
-class NotificationUtils @Inject constructor(
+
+/**
+ * 消息通知工具类
+ */
+class NotificationUtils(
    @ApplicationContext private val context: Context
 ) {
 

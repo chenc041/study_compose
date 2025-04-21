@@ -45,6 +45,8 @@ fun SettingsScreen(
         Log.d("TAG", "onActivityResult: $it")
     }
     var text by remember { mutableStateOf("") }
+    val title = stringResource(R.string.test_notification_title  )
+    val content = stringResource(R.string.test_notification_content)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +54,7 @@ fun SettingsScreen(
     ) {
         Button(onClick = {
             if (permissionNotificationState.status.isGranted) {
-                settingViewModel.senNotification()
+                settingViewModel.senNotification(title, content)
             } else {
                 permissionNotificationState.launchPermissionRequest()
             }

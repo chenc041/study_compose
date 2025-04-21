@@ -12,16 +12,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
-    private val notificationUtils: NotificationUtils,
     private val commonUtils: CommonUtils,
+    private val notificationUtils: NotificationUtils,
     private val sharedPreferencesUtils: SharedPreferencesUtils,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    fun senNotification() {
+    /**
+     * 发送消息通知
+     */
+    fun senNotification(title: String, content: String) {
         notificationUtils.sendDefaultNotification(
-            title = context.getString(R.string.test_notification_title),
-            content = context.getString(R.string.test_notification_content),
+            title = title,
+            content = content,
             iconRes = R.drawable.ic_launcher_foreground
         )
     }

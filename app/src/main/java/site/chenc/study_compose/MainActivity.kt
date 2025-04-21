@@ -1,6 +1,7 @@
 package site.chenc.study_compose
 
 import android.os.Build
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -30,12 +31,15 @@ import site.chenc.study_compose.root.RootScreen
 import site.chenc.study_compose.setting.view.QRCodeScannerScreen
 import site.chenc.study_compose.setting.view.SettingsDetailScreen
 import site.chenc.study_compose.setting.view.WebViewScreen
-import site.chenc.study_compose.ui.common.GlobalViewModel
 import site.chenc.study_compose.ui.theme.Study_composeTheme
+import site.chenc.study_compose.utils.SnackbarManagerUtils
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    @Inject
+    lateinit var snackbarManagerUtils: SnackbarManagerUtils
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +47,7 @@ class MainActivity : ComponentActivity() {
         window.isNavigationBarContrastEnforced = false
         setContent {
             Study_composeTheme {
-                BaseScreen()
+                BaseScreen(snackbarManagerUtils)
             }
         }
     }
@@ -55,9 +59,8 @@ class MainActivity : ComponentActivity() {
  */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun BaseScreen() {
+fun BaseScreen(snackbarManagerUtils: SnackbarManagerUtils) {
     val navController = rememberNavController()
-
     NavHost(
         navController = navController,
         startDestination = AppRoutes.ROOT,
@@ -105,7 +108,7 @@ fun BaseScreen() {
             WebViewScreen()
         }
     }
-    CustomSnackbarHost()
+    CustomSnackbarHost(snackbarManagerUtils)
 }
 
 
@@ -113,12 +116,10 @@ fun BaseScreen() {
  * 自定义SnackbarHost
  */
 @Composable
-fun CustomSnackbarHost(
-    globalViewModel: GlobalViewModel = hiltViewModel<GlobalViewModel>()
-) {
+fun CustomSnackbarHost(snackbarManagerUtils: SnackbarManagerUtils) {
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
-        globalViewModel.let { it ->
+        snackbarManagerUtils.let { it ->
             it.snackbarMessage.collect {
                 val result = snackbarHostState.showSnackbar(
                     message = it.message,

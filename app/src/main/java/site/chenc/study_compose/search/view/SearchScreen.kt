@@ -16,7 +16,10 @@ import site.chenc.study_compose.models.UiState
 import site.chenc.study_compose.search.viewmodel.SearchViewModel
 
 @Composable
-fun SearchScreen(navController: NavController ,viewModel: SearchViewModel = hiltViewModel<SearchViewModel>()) {
+fun SearchScreen(
+    navController: NavController,
+    viewModel: SearchViewModel = hiltViewModel<SearchViewModel>()
+) {
     // 监听 ViewModel 的状态
     val userState by viewModel.userState.collectAsState()
     val name by remember { mutableStateOf("chenc041") }
@@ -26,15 +29,17 @@ fun SearchScreen(navController: NavController ,viewModel: SearchViewModel = hilt
         viewModel.fetchUser(name)
     }
     Column(modifier = Modifier.fillMaxSize()) {
-        when(val user = userState) {
+        when (val user = userState) {
             is UiState.Success -> {
                 Text(text = "ID: ${user.data.id}")
                 Text(text = "Name: ${user.data.name}")
                 Text(text = "Email: ${user.data.login}")
             }
+
             is UiState.Error -> {
                 Text(text = "Error: ${user.message}")
             }
+
             else -> {
                 Text(text = "Loading...")
             }

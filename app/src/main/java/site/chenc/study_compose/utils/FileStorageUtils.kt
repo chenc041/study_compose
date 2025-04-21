@@ -8,12 +8,17 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
+import jakarta.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import site.chenc.study_compose.models.OperationResult
 import java.io.IOException
 import javax.inject.Inject
 
+
+/**
+ * 文件相关工具类
+ */
 class FileStorageUtils @Inject constructor(
     @ApplicationContext private val context: Context,
 ) {
