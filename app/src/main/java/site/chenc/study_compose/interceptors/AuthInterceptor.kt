@@ -2,7 +2,7 @@ package site.chenc.study_compose.interceptors
 
 import okhttp3.Interceptor
 import site.chenc.study_compose.AppConfig
-import site.chenc.study_compose.utils.GlobalEventBusUtils
+import site.chenc.study_compose.utils.GlobalEventUtils
 import site.chenc.study_compose.utils.SharedPreferencesUtils
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -14,7 +14,6 @@ import javax.net.ssl.SSLHandshakeException
  */
 class AuthInterceptor @Inject constructor(
     private val sharedPreferencesUtils: SharedPreferencesUtils,
-    private val globalEventBusUtils: GlobalEventBusUtils,
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val token = sharedPreferencesUtils.getStringValue(AppConfig.AUTH_TOKEN_KEY) ?: ""
@@ -24,7 +23,7 @@ class AuthInterceptor @Inject constructor(
         try {
             val response = chain.proceed(request)
             if (response.code == 401) {
-                globalEventBusUtils.updateIsAuthenticated(false)
+                GlobalEventUtils.updateIsAuthenticated(true)
             }
             return response
         } catch (e: IOException) {

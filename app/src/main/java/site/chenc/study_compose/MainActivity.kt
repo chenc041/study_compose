@@ -1,7 +1,6 @@
 package site.chenc.study_compose
 
 import android.os.Build
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -32,14 +30,11 @@ import site.chenc.study_compose.setting.view.QRCodeScannerScreen
 import site.chenc.study_compose.setting.view.SettingsDetailScreen
 import site.chenc.study_compose.setting.view.WebViewScreen
 import site.chenc.study_compose.ui.theme.Study_composeTheme
-import site.chenc.study_compose.utils.SnackbarManagerUtils
-import javax.inject.Inject
+import site.chenc.study_compose.utils.GlobalEventUtils
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var snackbarManagerUtils: SnackbarManagerUtils
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +42,7 @@ class MainActivity : ComponentActivity() {
         window.isNavigationBarContrastEnforced = false
         setContent {
             Study_composeTheme {
-                BaseScreen(snackbarManagerUtils)
+                BaseScreen()
             }
         }
     }
@@ -59,8 +54,9 @@ class MainActivity : ComponentActivity() {
  */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun BaseScreen(snackbarManagerUtils: SnackbarManagerUtils) {
+fun BaseScreen() {
     val navController = rememberNavController()
+
     NavHost(
         navController = navController,
         startDestination = AppRoutes.ROOT,
@@ -108,18 +104,19 @@ fun BaseScreen(snackbarManagerUtils: SnackbarManagerUtils) {
             WebViewScreen()
         }
     }
-    CustomSnackbarHost(snackbarManagerUtils)
+    CustomSnackbarHost()
 }
 
 
 /**
  * 自定义SnackbarHost
  */
+
 @Composable
-fun CustomSnackbarHost(snackbarManagerUtils: SnackbarManagerUtils) {
+fun CustomSnackbarHost() {
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
-        snackbarManagerUtils.let { it ->
+        GlobalEventUtils.let { it ->
             it.snackbarMessage.collect {
                 val result = snackbarHostState.showSnackbar(
                     message = it.message,

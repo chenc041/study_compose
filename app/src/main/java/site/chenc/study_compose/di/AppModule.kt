@@ -9,7 +9,6 @@ import dagger.hilt.components.SingletonComponent
 import site.chenc.study_compose.utils.CommonUtils
 import site.chenc.study_compose.utils.NotificationUtils
 import site.chenc.study_compose.utils.SharedPreferencesUtils
-import site.chenc.study_compose.utils.SnackbarManagerUtils
 import javax.inject.Singleton
 
 @Module
@@ -31,9 +30,5 @@ object AppModule {
     @Provides
     @Singleton
     fun provideSharedPreferencesUtils(@ApplicationContext context: Context): SharedPreferencesUtils = SharedPreferencesUtils(context)
-
-    @Provides
-    @Singleton
-    fun provideSnackbarManagerUtils(): SnackbarManagerUtils = SnackbarManagerUtils()
 
 }
