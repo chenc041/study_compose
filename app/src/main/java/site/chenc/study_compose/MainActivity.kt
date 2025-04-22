@@ -115,22 +115,21 @@ fun BaseScreen() {
 @Composable
 fun CustomSnackbarHost() {
     val snackbarHostState = remember { SnackbarHostState() }
+    val snackbarMessage = remember { GlobalEventUtils.snackbarMessage }
     LaunchedEffect(Unit) {
-        GlobalEventUtils.let { it ->
-            it.snackbarMessage.collect {
-                val result = snackbarHostState.showSnackbar(
-                    message = it.message,
-                    actionLabel = it.actionLabel,
-                    withDismissAction = it.withDismissAction,
-                )
-                when (result) {
-                    SnackbarResult.ActionPerformed -> {
-                        it.onAction?.invoke()
-                    }
+        snackbarMessage.collect {
+            val result = snackbarHostState.showSnackbar(
+                message = it.message,
+                actionLabel = it.actionLabel,
+                withDismissAction = it.withDismissAction,
+            )
+            when (result) {
+                SnackbarResult.ActionPerformed -> {
+                    it.onAction?.invoke()
+                }
 
-                    SnackbarResult.Dismissed -> {
-                        it.onDismiss?.invoke()
-                    }
+                SnackbarResult.Dismissed -> {
+                    it.onDismiss?.invoke()
                 }
             }
         }
