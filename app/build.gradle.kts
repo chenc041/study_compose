@@ -23,7 +23,7 @@ val versionCodeValue = currentDateTime.format(formatter).toInt()
 
 android {
     namespace = "site.chenc.study_compose"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "site.chenc.study_compose"
