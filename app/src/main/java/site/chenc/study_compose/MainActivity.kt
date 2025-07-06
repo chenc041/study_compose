@@ -61,27 +61,7 @@ fun BaseScreen() {
         navController = navController,
         startDestination = AppRoutes.ROOT,
         modifier = Modifier
-            .fillMaxSize(),
-        enterTransition = {
-            slideIntoContainer(
-                towards = SlideDirection.Left,
-            )
-        },
-        exitTransition = {
-            slideOutOfContainer(
-                towards = SlideDirection.Left,
-            )
-        },
-        popEnterTransition = {
-            slideIntoContainer(
-                towards = SlideDirection.Right,
-            )
-        },
-        popExitTransition = {
-            slideOutOfContainer(
-                towards = SlideDirection.Right,
-            )
-        }
+            .fillMaxSize()
     ) {
         composable(
             route = AppRoutes.ROOT

@@ -15,7 +15,7 @@ class SettingViewModel @Inject constructor(
     private val commonUtils: CommonUtils,
     private val notificationUtils: NotificationUtils,
     private val sharedPreferencesUtils: SharedPreferencesUtils,
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : ViewModel() {
 
     /**

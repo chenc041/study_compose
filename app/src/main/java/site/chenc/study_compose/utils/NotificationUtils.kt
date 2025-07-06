@@ -14,14 +14,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import site.chenc.study_compose.AppConfig
 import site.chenc.study_compose.R
 import java.util.concurrent.atomic.AtomicInteger
-import javax.inject.Inject
 
 
 /**
  * 消息通知工具类
  */
 class NotificationUtils(
-   @ApplicationContext private val context: Context
+   @param:ApplicationContext private val context: Context
 ) {
 
     fun createNotificationChannel() {
