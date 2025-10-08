@@ -2,7 +2,7 @@
 accompanistPermissions = "0.37.3"
 agp = "8.13.0"
 barcodeScanning = "17.3.0"
-cameraCore = "1.5.0"
+cameraCore = "1.5.1"
 coilCompose = "3.3.0"
 converterGson = "3.0.0"
 coreSplashscreen = "1.0.1"
