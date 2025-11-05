@@ -1,6 +1,6 @@
 [versions]
 accompanistPermissions = "0.37.3"
-agp = "8.12.0"
+agp = "8.13.0"
 barcodeScanning = "17.3.0"
 cameraCore = "1.4.2"
 coilCompose = "3.3.0"
