@@ -26,7 +26,7 @@ retrofit = "3.0.0"
 roomRuntime = "2.8.3"
 runtimeLivedata = "1.9.4"
 sentryAndroid = "8.26.0"
-sentryComposeAndroid = "8.25.0"
+sentryComposeAndroid = "8.26.0"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
