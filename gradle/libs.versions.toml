@@ -25,7 +25,7 @@ pagingRuntime = "3.3.6"
 retrofit = "3.0.0"
 roomRuntime = "2.8.4"
 runtimeLivedata = "1.10.0"
-sentryAndroid = "8.28.0"
+sentryAndroid = "8.29.0"
 sentryComposeAndroid = "8.28.0"
 
 [libraries]
