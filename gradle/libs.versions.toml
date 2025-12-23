@@ -73,6 +73,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 sentry-android = { module = "io.sentry:sentry-android", version.ref = "sentryAndroid" }
 sentry-compose-android = { module = "io.sentry:sentry-compose-android", version.ref = "sentryComposeAndroid" }
+androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

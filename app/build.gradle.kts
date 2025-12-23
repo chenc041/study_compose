@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.io.FileInputStream
@@ -23,12 +24,14 @@ val versionCodeValue = currentDateTime.format(formatter).toInt()
 
 android {
     namespace = "site.chenc.study_compose"
-    compileSdk = 36
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
         applicationId = "site.chenc.study_compose"
         minSdk = 30
-        targetSdk = 35
+        targetSdk = 36
         versionCode = versionCodeValue
         versionName = configProperties.getProperty("app.version", "")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -87,8 +90,10 @@ android {
         targetCompatibility = javaVersion
     }
 
-    kotlinOptions {
-        jvmTarget = javaVersion.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.fromTarget(javaVersion.toString())
+        }
     }
 
     buildFeatures {
@@ -122,6 +127,7 @@ dependencies {
     implementation(libs.retrofit)       // Retrofit
     implementation(libs.converter.gson) // Gson 转换器
     implementation(libs.kotlinx.coroutines.android) // 协程
+    implementation(libs.androidx.material.icons.core)
 
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
