@@ -24,7 +24,7 @@ okhttp = "5.3.2"
 pagingRuntime = "3.4.0"
 retrofit = "3.0.0"
 roomRuntime = "2.8.4"
-runtimeLivedata = "1.10.2"
+runtimeLivedata = "1.10.3"
 sentryAndroid = "8.32.0"
 sentryComposeAndroid = "8.32.0"
 
