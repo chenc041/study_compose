@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("com.google.dagger.hilt.android") version "2.59.1"
+    id("com.google.dagger.hilt.android") version "2.59.2"
     id("io.sentry.android.gradle") version "6.1.0"
     id("com.google.devtools.ksp")
 }
